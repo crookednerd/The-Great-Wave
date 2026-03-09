@@ -21,13 +21,13 @@
         }
     </script>
     <style>
-    .age-btn.active { background-color: #0077B6; color: white; transform: scale(1.1); box-shadow: 0 10px 15px -3px rgba(0, 119, 182, 0.4); }
-    .filter-pill.active { background-color: #023E8A; color: white; }
-    .loader { border: 3px solid #f3f3f3; border-top: 3px solid #F43F5E; border-radius: 50%; width: 24px; height: 24px; animation: spin 1s linear infinite; }
+   .age-btn.active { background-color: #0077B6; color: white; transform: scale(1.1); box-shadow: 0 10px 15px -3px rgba(0, 119, 182, 0.4); }
+   .filter-pill.active { background-color: #023E8A; color: white; }
+   .loader { border: 3px solid #f3f3f3; border-top: 3px solid #F43F5E; border-radius: 50%; width: 24px; height: 24px; animation: spin 1s linear infinite; }
       @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-    .wave-divider { position: absolute; bottom: 0; left: 0; width: 100%; overflow: hidden; line-height: 0; transform: rotate(180deg); }
-    .wave-divider svg { position: relative; display: block; width: calc(100% + 1.3px); height: 70px; }
-    .wave-divider.shape-fill { fill: #F8FAFC; }
+   .wave-divider { position: absolute; bottom: 0; left: 0; width: 100%; overflow: hidden; line-height: 0; transform: rotate(180deg); }
+   .wave-divider svg { position: relative; display: block; width: calc(100% + 1.3px); height: 70px; }
+   .wave-divider.shape-fill { fill: #F8FAFC; }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 antialiased selection:bg-coastal-foam selection:text-coastal-dark">
@@ -183,8 +183,8 @@
                     friend: ["Heavy focus on peer validation emerges", "Formation of strong, same-sex friendships", "Obsession with fitting in begins"], 
                     parent: ["Periods of being sullen and aloof", "Losing interest in family matters", "Increased desire for independence"], 
                     romance: ["Crushes from afar", "Mixed-sex group socializing", "Minimal formal dating"], 
-                    emotion:, 
-                    exp:, 
+                    emotion: ["Unpredictable mood shifts due to hormones"], 
+                    exp: ["Pushing back against standard household rules"], 
                     chores: ["Can clean their own room", "Help with meal preparation", "Organizing school materials"], 
                     red: ["Extreme body weight obsession", "Persistent social withdrawal", "Uncontrolled physical aggression"] 
                 },
@@ -196,12 +196,12 @@
                     romance: ["Increased curiosity about dating", "Early exploration of sexual identity"], 
                     emotion: ["Operates under 'hot cognition' (impulse over logic)", "Highly sensitive to peer feedback"], 
                     exp: ["Curiosity about rule-breaking", "Cyberbullying awareness becomes critical"], 
-                    chores:, 
+                    chores: ["Independent personal hygiene management"], 
                     red: 
                 },
                 "13": { 
                     phys: ["Growth velocity begins to slow", "Establishment of regular ovulatory cycles", "Adult-level fine motor precision"], 
-                    mind:, 
+                    mind: ["Peak dopamine reward sensitivity makes thrill-seeking common"], 
                     friend: ["Friendships deepen in commitment and intimacy", "Peer pressure reaches its absolute peak"], 
                     parent: ["Conflict increases as teen demands behavioral autonomy", "Questions family social norms and authority"], 
                     romance: ["Genuine interest in dating partnerships begins", "Early relationships serve as practice for empathy"], 
@@ -218,14 +218,14 @@
                     romance:, 
                     emotion:, 
                     exp: ["Experimentation with minor rebellion", "Highest susceptibility to peer presence for risk"], 
-                    chores:, 
+                    chores: ["Mowing the yard", "Making and packing own lunches"], 
                     red: 
                 },
                 "15": { 
                     phys: ["Final brain pruning phase begins", "Physical changes of puberty are mostly complete"], 
                     mind: ["More defined sense of identity and self-esteem", "Considers future and career possibilities"], 
                     friend: ["Friendships based on shared values, not just proximity", "Nuanced and meaningful peer support"], 
-                    parent:, 
+                    parent: ["Conflict often peaks and begins to subside"], 
                     romance:, 
                     emotion: ["Improved integration of thought and emotion", "Able to put 'brakes' on emotional intensity"], 
                     exp:, 
@@ -238,9 +238,9 @@
                     friend: ["Intimate self-disclosure in friendships", "Friendships serve as templates for adulthood"], 
                     parent: ["Arguments shift from rules to future-planning", "Negotiating curfews and car usage"], 
                     romance: ["Navigating complex emotional partnerships", "Understanding of physical boundaries solidifies"], 
-                    emotion:, 
+                    emotion: ["Emotional volatility decreases significantly"], 
                     exp:, 
-                    chores:, 
+                    chores: ["Personal banking and savings"], 
                     red: 
                 },
                 "17": { 
@@ -281,13 +281,13 @@
                 "11": { 
                     phys:, 
                     mind:, 
-                    friend:, 
+                    friend: ["Activity-based friendships are dominant"], 
                     parent: ["Aloofness towards family events", "Periods of being sullen"], 
                     romance: ["Group mixed-sex socializing", "Minimal individual dating interest"], 
                     emotion:, 
                     exp: ["Exploring physical limits in play", "Password security fundamentals"], 
                     chores:, 
-                    red: 
+                    red: ["Uncontrolled physical aggression", "Obsessive screen fixation"] 
                 },
                 "12": { 
                     phys: ["Pubic hair onset", "Voice deepening hints", "Clumsiness increases"], 
@@ -296,38 +296,38 @@
                     parent: ["Increased need for physical privacy", "Parental advice often rejected for peer advice"], 
                     romance: ["First crushes from afar", "Curiosity about physical intimacy"], 
                     emotion: ["Hot cognition (impulse over logic)", "Highly sensitive to peer feedback"], 
-                    exp:, 
+                    exp: ["Exploring physical limits", "Curiosity about rule-breaking"], 
                     chores:, 
                     red: 
                 },
                 "13": { 
                     phys: ["Onset of major growth spurt (10cm/yr)", "Voice cracking and early facial hair", "Facial oil & skin breakouts"], 
-                    mind:, 
+                    mind: ["High dopamine sensitivity leads to risk taking"], 
                     friend: ["Peer pressure begins to peak", "Friendships deepen in commitment"], 
                     parent: ["Argumentative push for behavioral autonomy", "High conflict over family rules"], 
                     romance: ["Awkward flirtation stages", "Genuine interest in dating begins"], 
                     emotion: ["Autonomy vs. connection struggle", "Privacy: Closed door necessity"], 
                     exp:, 
                     chores: ["Complete own laundry", "Managing own morning alarms", "Assisting with sibling/pet care"], 
-                    red: 
+                    red: ["Involvement with dangerous/older peer groups", "Extreme defiance"] 
                 },
                 "14": { 
                     phys: ["Peak Height Velocity (avg 13.5 - 14 yrs)", "Nocturnal emissions ('wet dreams')", "Muscle mass increases rapidly"], 
                     mind:, 
                     friend: ["Complex peer networks", "Understanding of others' perspectives grows"], 
                     parent: ["Conflict with male authority figures peaks", "Push for independence"], 
-                    romance:, 
+                    romance: ["Interest in defined dating"], 
                     emotion: ["Masking insecurities with bravado", "Emotional impulse still leads logic"], 
                     exp: ["Highest susceptibility to peer presence for risk", "Experimentation with minor rebellion"], 
                     chores:, 
                     red: 
                 },
                 "15": { 
-                    phys:, 
-                    mind:, 
+                    phys: ["Facial and underarm hair thickens", "Acne may peak"], 
+                    mind: ["More defined sense of identity", "Considers career possibilities"], 
                     friend: ["Friendships based on shared values", "Meaningful peer support"], 
                     parent: ["Conflict begins to gradually decrease", "Complex understanding of parents"], 
-                    romance:, 
+                    romance: ["More stable romantic interests"], 
                     emotion: ["Formation of personal 'honor codes'", "Improved integration of thought and emotion"], 
                     exp:, 
                     chores:, 
@@ -339,14 +339,14 @@
                     friend: ["Intimate self-disclosure in friendships", "Friendships serve as templates for adulthood"], 
                     parent: ["Arguments shift from rules to future-planning", "Negotiating vehicle privileges"], 
                     romance: ["Navigating complex emotional partnerships", "Physical boundary understanding solidifies"], 
-                    emotion:, 
-                    exp:, 
+                    emotion: ["Improved impulse control"], 
+                    exp: ["Phishing & scam detection"], 
                     chores:, 
                     red: 
                 },
                 "17": { 
-                    phys:, 
-                    mind:, 
+                    phys: ["Final height reached or nearing completion", "Facial hair stabilizes"], 
+                    mind: ["Core value definition"], 
                     friend: ["Quality over quantity in peer groups"], 
                     parent: ["Adult-to-adult dynamic begins", "Listening to family advice again"], 
                     romance: ["Capacity for commitment solidifies"], 
@@ -424,13 +424,24 @@
             const grid = document.getElementById('milestone-grid');
             const d = waveData[curGen][curAge];
             
-            const panels =.filter(p => p.data && p.data.length > 0);
+            const panels = [
+                { id: 'phys', title: 'Physical', data: d.phys ||, icon: '🏄', color: 'border-coastal-teal text-coastal-teal' },
+                { id: 'mind', title: 'Cognitive', data: d.mind ||, icon: '🧠', color: 'border-coastal-dark text-coastal-dark' },
+                { id: 'friend', title: 'Friends', data: d.friend ||, icon: '🤙', color: 'border-sky-500 text-sky-600' },
+                { id: 'parent', title: 'Parents', data: d.parent ||, icon: '🏠', color: 'border-indigo-400 text-indigo-600' },
+                { id: 'romance', title: 'Romance', data: d.romance ||, icon: '❤️', color: 'border-rose-400 text-rose-600' },
+                { id: 'emotion', title: 'Emotions', data: d.emotion ||, icon: '🌊', color: 'border-cyan-400 text-cyan-600' },
+                { id: 'exp', title: 'Boundaries', data: d.exp ||, icon: '🛹', color: 'border-orange-400 text-orange-600' },
+                { id: 'chores', title: 'Chores', data: d.chores ||, icon: '🧹', color: 'border-emerald-400 text-emerald-600' },
+                { id: 'red', title: 'Red Flags', data: d.red ||, icon: '🚩', color: 'border-rose-600 text-rose-600' }
+            ];
 
             const filtered = curCat === 'all'? panels : panels.filter(x => x.id === curCat |
 
 | x.id === 'red');
+            const finalPanels = filtered.filter(p => p.data && p.data.length > 0);
             
-            grid.innerHTML = filtered.map(x => `
+            grid.innerHTML = finalPanels.map(x => `
                 <div class="p-6 rounded-2xl border-t-[6px] shadow-sm hover:shadow-md transition-all ${x.id === 'red'? 'bg-rose-50 border-rose-500' : 'bg-white ' + x.color}">
                     <div class="flex items-center gap-3 mb-4">
                         <span class="text-2xl">${x.icon}</span>
@@ -461,7 +472,7 @@
                 type: 'bar',
                 data: {
                     labels: ['Ages 6-12', 'Ages 13-18'],
-                    datasets:, 
+                    datasets:,
                         backgroundColor: '#F43F5E',
                         borderRadius: 6
                     }]
@@ -487,7 +498,7 @@
                 type: 'line',
                 data: {
                     labels: ['0 mins', '30 mins', '60 mins', '90 mins', '120 mins'],
-                    datasets:, 
+                    datasets:,
                         borderColor: '#8B5CF6', 
                         backgroundColor: 'rgba(139, 92, 246, 0.2)', 
                         fill: true, 
