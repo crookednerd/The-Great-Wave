@@ -1,536 +1,537 @@
-<!DOCTYPE html>  
-<html lang="en" class="scroll-smooth">  
-<head>  
-    <meta charset="UTF-8">  
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-    <title>The Great Wave | Global Parent's Field Guide</title>  
-    <meta name="description" content="An exhaustive developmental resource and red-flag guide for parents of adolescents and emerging adults.">  
-    <script src="https://cdn.tailwindcss.com"></script>  
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>  
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">  
-    <script>  
-        tailwind.config = {  
-            theme: {  
-                extend: {  
-                    fontFamily: { sans: ['Outfit', 'sans-serif'], display: ['Quicksand', 'sans-serif'] },  
-                    colors: {  
-                        coastal: { teal: '#0077B6', dark: '#023E8A', sand: '#FEFCE8', coral: '#F43F5E', foam: '#E8FBF6' }  
-                    }  
-                }  
-            }  
-        }  
-    </script>  
-    <style>  
-     .age-btn.active { background-color: #0077B6; color: white; transform: scale(1.1); box-shadow: 0 10px 15px -3px rgba(0, 119, 182, 0.4); }  
-     .filter-pill.active { background-color: #023E8A; color: white; }  
-     .loader { border: 3px solid #f3f3f3; border-top: 3px solid #F43F5E; border-radius: 50%; width: 24px; height: 24px; animation: spin 1s linear infinite; }  
-      @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }  
-     .wave-divider { position: absolute; bottom: 0; left: 0; width: 100%; overflow: hidden; line-height: 0; transform: rotate(180deg); }  
-     .wave-divider svg { position: relative; display: block; width: calc(100% + 1.3px); height: 70px; }  
-     .wave-divider.shape-fill { fill: #F8FAFC; }  
-    </style>  
-</head>  
-<body class="bg-slate-50 text-slate-800 antialiased selection:bg-coastal-foam selection:text-coastal-dark">  
-  
-    <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 px-6 py-4 flex justify-between items-center shadow-sm">  
-        <div class="flex items-center gap-3">  
-            <div class="bg-coastal-teal p-2 rounded-xl text-white font-display font-bold text-xl shadow-md">≋</div>  
-            <div class="flex flex-col">  
-                <span class="font-display font-bold text-slate-900 leading-none text-lg tracking-tight">The Great Wave</span>  
-                <span class="text-[10px] font-black text-coastal-teal uppercase tracking-widest">Global Parent Guide</span>  
-            </div>  
-        </div>  
-        <a href="#ai-tide-check" class="bg-coastal-coral text-white text-xs font-bold uppercase px-5 py-2.5 rounded-full hover:bg-rose-600 transition-colors shadow-md">AI Tide Check</a>  
-    </nav>  
-  
-    <header class="relative bg-coastal-foam pt-24 pb-32 px-6 text-center overflow-hidden">  
-        <div class="max-w-4xl mx-auto relative z-10">  
-            <h1 class="text-5xl md:text-7xl font-display font-bold text-slate-900 mb-6 leading-tight">  
-                Adolescent Growth <br/><span class="text-coastal-teal">Cross-Examined.</span>  
-            </h1>  
-            <p class="text-lg md:text-xl text-slate-600 font-medium mb-10 max-w-2xl mx-auto leading-relaxed">  
-                A definitive, coastal-inspired resource for parents navigating the turbulent tides of ages 11–25. Aggregating rigorous clinical benchmarks from the <strong class="text-coastal-dark">WHO, AAP, CPS, and OECD</strong>.  
-            </p>  
-        </div>  
-        <div class="wave-divider">  
-            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">  
-                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>  
-            </svg>  
-        </div>  
-    </header>  
-  
-    <main class="max-w-7xl mx-auto px-6 -mt-10 mb-20 relative z-20">  
-          
-        <section class="bg-white rounded-[2rem] shadow-xl p-8 md:p-12 mb-16 border border-slate-100">  
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-10">  
-                <div>  
-                    <h2 class="text-3xl font-display font-bold text-slate-900 mb-2">Milestone Tracker</h2>  
-                    <p class="text-slate-500 text-sm">Select biological sex and age to view specific developmental waves.</p>  
-                </div>  
-                <div class="bg-slate-100 p-1.5 rounded-xl flex gap-1 w-full md:w-auto">  
-                    <button onclick="setGender('female')" id="f-btn" class="flex-1 md:px-8 py-2.5 rounded-lg font-bold text-sm transition-all bg-white shadow-sm text-coastal-teal">♀ Female</button>  
-                    <button onclick="setGender('male')" id="m-btn" class="flex-1 md:px-8 py-2.5 rounded-lg font-bold text-sm transition-all text-slate-500">♂ Male</button>  
-                </div>  
-            </div>  
-  
-            <div class="mb-10 overflow-x-auto pb-4">  
-                <div class="flex gap-2 min-w-[700px] md:min-w-0" id="age-nav"></div>  
-            </div>  
-  
-            <div class="flex flex-wrap gap-2 mb-10 border-b border-slate-100 pb-6">  
-                <button onclick="setCategory('all')" id="cat-all" class="filter-pill active px-4 py-2 rounded-full text-[11px] font-bold uppercase tracking-wider bg-slate-100 text-slate-600 transition-all hover:bg-slate-200">All</button>  
-                <button onclick="setCategory('phys')" id="cat-phys" class="filter-pill px-4 py-2 rounded-full text-[11px] font-bold uppercase tracking-wider bg-slate-100 text-slate-600 transition-all hover:bg-slate-200">Physical</button>  
-                <button onclick="setCategory('mind')" id="cat-mind" class="filter-pill px-4 py-2 rounded-full text-[11px] font-bold uppercase tracking-wider bg-slate-100 text-slate-600 transition-all hover:bg-slate-200">Cognitive</button>  
-                <button onclick="setCategory('friend')" id="cat-friend" class="filter-pill px-4 py-2 rounded-full text-[11px] font-bold uppercase tracking-wider bg-slate-100 text-slate-600 transition-all hover:bg-slate-200">Friends</button>  
-                <button onclick="setCategory('parent')" id="cat-parent" class="filter-pill px-4 py-2 rounded-full text-[11px] font-bold uppercase tracking-wider bg-slate-100 text-slate-600 transition-all hover:bg-slate-200">Parents</button>  
-                <button onclick="setCategory('romance')" id="cat-romance" class="filter-pill px-4 py-2 rounded-full text-[11px] font-bold uppercase tracking-wider bg-slate-100 text-slate-600 transition-all hover:bg-slate-200">Romance</button>  
-                <button onclick="setCategory('emotion')" id="cat-emotion" class="filter-pill px-4 py-2 rounded-full text-[11px] font-bold uppercase tracking-wider bg-slate-100 text-slate-600 transition-all hover:bg-slate-200">Emotions</button>  
-                <button onclick="setCategory('exp')" id="cat-exp" class="filter-pill px-4 py-2 rounded-full text-[11px] font-bold uppercase tracking-wider bg-slate-100 text-slate-600 transition-all hover:bg-slate-200">Boundaries</button>  
-                <button onclick="setCategory('chores')" id="cat-chores" class="filter-pill px-4 py-2 rounded-full text-[11px] font-bold uppercase tracking-wider bg-slate-100 text-slate-600 transition-all hover:bg-slate-200">Chores</button>  
-                <button onclick="setCategory('red')" id="cat-red" class="filter-pill px-4 py-2 rounded-full text-[11px] font-bold uppercase tracking-wider bg-rose-50 text-rose-600 transition-all hover:bg-rose-100 border border-rose-100">🚩 Red Flags</button>  
-            </div>  
-  
-            <div id="milestone-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>  
-        </section>  
-  
-        <section class="mb-24">  
-            <div class="text-center mb-12">  
-                <h2 class="text-4xl font-display font-bold text-slate-900 mb-4">Adolescence in Data</h2>  
-                <p class="text-slate-500 max-w-2xl mx-auto">Verifiable clinical trends comparing global health benchmarks.</p>  
-            </div>  
-  
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">  
-                <div class="bg-white p-8 rounded-[2rem] shadow-lg border border-slate-100 hover:shadow-xl transition-shadow">  
-                    <div class="flex justify-between items-start mb-6">  
-                        <h3 class="text-xl font-display font-bold text-slate-800">Growth Velocity (cm/yr)</h3>  
-                        <span class="px-3 py-1 bg-coastal-foam text-[10px] font-bold text-coastal-teal rounded-full uppercase tracking-wider">WHO / CDC</span>  
-                    </div>  
-                    <div class="relative w-full h-[250px]">  
-                        <canvas id="growthChart"></canvas>  
-                    </div>  
-                    <p class="text-xs text-slate-400 mt-4 leading-relaxed">Peak Height Velocity (PHV) occurs around 11.5 yrs (8.3 cm/yr) for females, and 13.5 yrs (9.5 cm/yr) for males.</p>  
-                </div>  
-  
-                <div class="bg-white p-8 rounded-[2rem] shadow-lg border border-slate-100 hover:shadow-xl transition-shadow">  
-                    <div class="flex justify-between items-start mb-6">  
-                        <h3 class="text-xl font-display font-bold text-slate-800">The Sleep Deficit</h3>  
-                        <span class="px-3 py-1 bg-rose-50 text-[10px] font-bold text-rose-600 rounded-full uppercase tracking-wider">NSF / CDC</span>  
-                    </div>  
-                    <div class="relative w-full h-[250px]">  
-                        <canvas id="sleepChart"></canvas>  
-                    </div>  
-                    <p class="text-xs text-slate-400 mt-4 leading-relaxed">Biological requirement (8-10 hours) versus actual reported sleep among North American adolescents (72.7% report under 8 hrs).</p>  
-                </div>  
-  
-                <div class="bg-white p-8 rounded-[2rem] shadow-lg border border-slate-100 hover:shadow-xl transition-shadow">  
-                    <div class="flex justify-between items-start mb-6">  
-                        <h3 class="text-xl font-display font-bold text-slate-800">The Peer Multiplier</h3>  
-                        <span class="px-3 py-1 bg-amber-50 text-[10px] font-bold text-amber-600 rounded-full uppercase tracking-wider">Clinical Data</span>  
-                    </div>  
-                    <div class="relative w-full h-[250px]">  
-                        <canvas id="riskChart"></canvas>  
-                    </div>  
-                    <p class="text-xs text-slate-400 mt-4 leading-relaxed">In simulated driving tasks, adolescent risk-taking spikes 300% when peers are present. Adult risk-taking remains flat regardless of observation.</p>  
-                </div>  
-  
-                <div class="bg-white p-8 rounded-[2rem] shadow-lg border border-slate-100 hover:shadow-xl transition-shadow">  
-                    <div class="flex justify-between items-start mb-6">  
-                        <h3 class="text-xl font-display font-bold text-slate-800">The Screen Time Tax</h3>  
-                        <span class="px-3 py-1 bg-purple-50 text-[10px] font-bold text-purple-600 rounded-full uppercase tracking-wider">NSF Data</span>  
-                    </div>  
-                    <div class="relative w-full h-[250px]">  
-                        <canvas id="screenChart"></canvas>  
-                    </div>  
-                    <p class="text-xs text-slate-400 mt-4 leading-relaxed">Adolescents naturally push their bedtime back by approximately 16 minutes for every 30 minutes of high-stimulation screen time before bed.</p>  
-                </div>  
-            </div>  
-        </section>  
-  
-        <section id="ai-tide-check" class="bg-coastal-dark rounded-[2.5rem] p-10 md:p-16 text-white shadow-2xl relative overflow-hidden">  
-            <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-coastal-teal/20 rounded-full blur-[100px]"></div>  
-            <div class="max-w-3xl mx-auto relative z-10">  
-                <div class="bg-coastal-teal w-14 h-14 rounded-2xl flex items-center justify-center mb-8 shadow-lg text-2xl">🛟</div>  
-                <h2 class="text-3xl md:text-5xl font-display font-bold mb-4">The Lifeguard (AI Tide Check)</h2>  
-                <p class="text-coastal-foam mb-8 text-lg opacity-90">Input a specific behavioral concern regarding your adolescent. Our system analyzes it against pediatric guidelines to determine if it represents normative development or a clinical riptide.</p>  
-                  
-                <div class="space-y-4">  
-                    <textarea id="ai-query" placeholder="e.g., My 16-year-old son has completely quit the basketball team, stays in his dark room all weekend, and his grades dropped from B's to F's. Is this normal teenage rebellion?" class="w-full bg-white/10 border border-white/20 rounded-2xl p-6 text-white placeholder-white/50 focus:ring-2 focus:ring-coastal-coral outline-none h-40 transition-all resize-none"></textarea>  
-                    <button id="ai-btn" onclick="runAiCheck()" class="w-full py-5 bg-coastal-coral hover:bg-rose-500 text-white font-bold rounded-2xl transition-all flex items-center justify-center gap-3 shadow-lg">  
-                        <span>Evaluate Scenario via Clinical Guidelines</span>  
-                        <div id="ai-loader" class="loader hidden"></div>  
-                    </button>  
-                    <div id="ai-response" class="hidden mt-6 bg-white/5 border border-white/10 p-6 rounded-2xl text-slate-200 text-sm leading-relaxed max-h-96 overflow-y-auto whitespace-pre-wrap"></div>  
-                </div>  
-            </div>  
-        </section>  
-  
-    </main>  
-  
-    <footer class="bg-slate-900 py-12 text-center text-slate-400">  
-        <p class="text-xs uppercase tracking-widest font-bold mb-4">© 2026 The Great Wave Guide</p>  
-        <div class="flex justify-center flex-wrap gap-6 text-[10px] uppercase font-bold opacity-60">  
-            <span>WHO Data</span> | <span>AAP Guidelines</span> | <span>CPS Directives</span> | <span>OECD Benchmarks</span>  
-        </div>  
-    </footer>  
-  
-    <script>  
-        // Comprehensive Database (Combines Individual Ages 11-18 + Emerging Adulthood with all specific fields)  
-        const waveData = {  
-            female: {  
-                "11": {   
-                    phys:,   
-                    mind:,   
-                    friend: ["Heavy focus on peer validation emerges", "Formation of strong, same-sex friendships", "Obsession with fitting in begins"],   
-                    parent:,   
-                    romance:,   
-                    emotion:,   
-                    exp:,   
-                    chores:,   
-                    red: ["Extreme body weight obsession", "Persistent social withdrawal"]   
-                },  
-                "12": {   
-                    phys: ["Peak Height Velocity typically reached", "Menarche (first menstruation) average onset"],   
-                    mind: ["Abstract thinking improves", "Understands long-term effects conceptually"],   
-                    friend: ["High sensitivity to social media status", "Friend group becomes primary support source"],   
-                    parent: ["Increased need for physical privacy (closed doors)", "Parental advice often rejected for peer advice"],   
-                    romance: ["Increased curiosity about dating", "Early exploration of sexual identity"],   
-                    emotion: ["Operates under 'hot cognition' (impulse over logic)", "Highly sensitive to peer feedback"],   
-                    exp:,   
-                    chores:,   
-                    red:   
-                },  
-                "13": {   
-                    phys: ["Growth velocity begins to slow", "Establishment of regular ovulatory cycles"],   
-                    mind:,   
-                    friend: ["Friendships deepen in commitment and intimacy", "Peer pressure reaches its absolute peak"],   
-                    parent: ["Conflict increases as teen demands behavioral autonomy", "Questions family social norms and authority"],   
-                    romance: ["Genuine interest in dating partnerships begins", "Early relationships serve as practice for empathy"],   
-                    emotion:,   
-                    exp:,   
-                    chores:,   
-                    red:   
-                },  
-                "14": {   
-                    phys: ["Near final adult height", "Circadian shift pushes natural sleep time later"],   
-                    mind: ["Abstract thinking and moral reasoning sharpen", "Can debate complex viewpoints"],   
-                    friend:,   
-                    parent:,   
-                    romance:,   
-                    emotion:,   
-                    exp: ["Experimentation with minor rebellion", "Highest susceptibility to peer presence for risk"],   
-                    chores: ["Mowing the yard", "Making and packing own lunches"],   
-                    red:   
-                },  
-                "15": {   
-                    phys: ["Final brain pruning phase begins", "Physical changes of puberty are mostly complete"],   
-                    mind: ["More defined sense of identity and self-esteem", "Considers future and career possibilities"],   
-                    friend: ["Friendships based on shared values, not just proximity", "Nuanced and meaningful peer support"],   
-                    parent:,   
-                    romance:,   
-                    emotion: ["Improved integration of thought and emotion", "Able to put 'brakes' on emotional intensity"],   
-                    exp:,   
-                    chores:,   
-                    red: ["Chronic apathy/loss of interest", "Excessive daytime sleepiness"]   
-                },  
-                "16": {   
-                    phys: ["Full skeletal maturity reached", "Neurological myelination improves transmission speed"],   
-                    mind:,   
-                    friend: ["Intimate self-disclosure in friendships", "Friendships serve as templates for adulthood"],   
-                    parent:,   
-                    romance: ["Navigating complex emotional partnerships", "Understanding of physical boundaries solidifies"],   
-                    emotion:,   
-                    exp:,   
-                    chores:,   
-                    red:   
-                },  
-                "17": {   
-                    phys: ["Final height reached", "Prefrontal cortex thickening continues"],   
-                    mind:,   
-                    friend:,   
-                    parent: ["Adult-to-adult dynamic begins", "Parents viewed as resources rather than wardens"],   
-                    romance:,   
-                    emotion: ["Capable of handling significant compounding stress", "Less mood volatility than early teens"],   
-                    exp:,   
-                    chores:,   
-                    red: ["Inability to plan 3 months ahead", "Complete social isolation"]   
-                },  
-                "18": {   
-                    phys: ["Peak adult physical stamina", "Circadian rhythm begins to normalize"],   
-                    mind: ["Legal autonomy achieved", "Consolidation of personal ethical frameworks"],   
-                    friend: ["Managing friendships while balancing extreme life changes (college/work)", "Lifelong bonds cemented"],   
-                    parent: ["Full separation of behavioral dependence", "Negotiating living-at-home boundaries if applicable"],   
-                    romance: ["Maintenance of long-term romantic partnerships", "Navigating shared living or long-distance"],   
-                    emotion:,   
-                    exp:,   
-                    chores:,   
-                    red: ["Heavy escapism (excessive gaming/drinking)", "Any expression of hopelessness/self-harm"]   
-                },  
-                "19-25": {   
-                    phys: ["Prefrontal cortex reaches final structural maturity (around 25)", "Peak bone mass achieved"],   
-                    mind: ["High capacity for dialectical thinking", "Cementing personal philosophies and civic identity"],   
-                    friend:,   
-                    parent:,   
-                    romance:,   
-                    emotion: ["Full emotional regulation capacity", "Managing compounding adult stresses (bills, career)"],   
-                    exp: ["Career exploration and job-switching", "Financial and geographical instability is normative"],   
-                    chores: ["Managing leases, taxes, and adult healthcare systems", "Civic participation (voting, community)"],   
-                    red: ["'Failure to Launch' (action-blocking anxiety)", "Complete lack of motivation for work/education", "Persistent social isolation to a childhood bedroom"]   
-                }  
-            },  
-            male: {  
-                "11": {   
-                    phys:,   
-                    mind:,   
-                    friend:,   
-                    parent:,   
-                    romance: ["Group mixed-sex socializing", "Minimal individual dating interest"],   
-                    emotion:,   
-                    exp:,   
-                    chores:,   
-                    red: ["Uncontrolled physical aggression", "Obsessive screen fixation"]   
-                },  
-                "12": {   
-                    phys: ["Pubic hair onset", "Growth spurt may slowly begin"],   
-                    mind: ["Abstract thinking concepts start to form", "Imaginary audience syndrome"],   
-                    friend:,   
-                    parent:,   
-                    romance: ["First crushes from afar", "Curiosity about physical intimacy"],   
-                    emotion: ["Hot cognition (impulse over logic)", "Vulnerability often masked by teasing"],   
-                    exp: ["Exploring physical limits", "Curiosity about rule-breaking"],   
-                    chores:,   
-                    red:   
-                },  
-                "13": {   
-                    phys: ["Onset of major growth spurt (Peak Height Velocity approaches)", "Voice cracking and early facial hair"],   
-                    mind:,   
-                    friend:,   
-                    parent: ["Argumentative push for behavioral autonomy", "High conflict over family rules"],   
-                    romance:,   
-                    emotion:,   
-                    exp:,   
-                    chores: ["Complete own laundry", "Managing own morning alarms"],   
-                    red: ["Involvement with dangerous/older peer groups", "Extreme defiance"]   
-                },  
-                "14": {   
-                    phys: ["Peak Height Velocity (avg 13.5 - 14 yrs)", "Nocturnal emissions ('wet dreams')"],   
-                    mind:,   
-                    friend: ["Complex peer networks", "Understanding of others' perspectives grows"],   
-                    parent:,   
-                    romance:,   
-                    emotion:,   
-                    exp: ["Highest susceptibility to peer presence for risk", "Experimentation with minor rebellion"],   
-                    chores:,   
-                    red:   
-                },  
-                "15": {   
-                    phys: ["Facial and underarm hair thickens", "Acne may peak"],   
-                    mind: ["More defined sense of identity", "Considers career possibilities"],   
-                    friend: ["Friendships based on shared values", "Meaningful peer support"],   
-                    parent: ["Conflict begins to gradually decrease", "Complex understanding of parents"],   
-                    romance:,   
-                    emotion:,   
-                    exp:,   
-                    chores:,   
-                    red: ["Chronic apathy", "Loss of interest in previously loved sports"]   
-                },  
-                "16": {   
-                    phys: ["Nearing final adult height", "Muscle mass continues to increase"],   
-                    mind:,   
-                    friend:,   
-                    parent:,   
-                    romance: ["Navigating complex emotional partnerships", "Physical boundary understanding solidifies"],   
-                    emotion:,   
-                    exp:,   
-                    chores:,   
-                    red:   
-                },  
-                "17": {   
-                    phys: ["Final height reached or nearing completion", "Facial hair stabilizes"],   
-                    mind:,   
-                    friend:,   
-                    parent: ["Adult-to-adult dynamic begins", "Parents viewed as resources"],   
-                    romance:,   
-                    emotion: ["Capable of handling significant stress", "Less mood volatility"],   
-                    exp:,   
-                    chores:,   
-                    red:   
-                },  
-                "18": {   
-                    phys: ["Full skeletal and muscular maturity", "Circadian rhythm normalizes"],   
-                    mind: ["Legal autonomy achieved", "Consolidation of ethical frameworks"],   
-                    friend: ["Managing friendships through life changes", "Lifelong bonds cemented"],   
-                    parent: ["Full separation of behavioral dependence", "Negotiating living-at-home boundaries"],   
-                    romance: ["Maintenance of long-term partnerships", "Navigating shared living"],   
-                    emotion:,   
-                    exp: ["Calculated career/education risks", "Legal consequences apply"],   
-                    chores:,   
-                    red: ["Heavy escapism (gaming/drinking)", "Expression of hopelessness"]   
-                },  
-                "19-25": {   
-                    phys: ["Prefrontal cortex finishes structural maturity", "Peak adult strength achieved"],   
-                    mind: ["High capacity for dialectical thinking", "Cementing personal philosophies"],   
-                    friend:,   
-                    parent:,   
-                    romance:,   
-                    emotion: ["Full emotional regulation capacity", "Managing compounding adult stresses"],   
-                    exp: ["Career exploration and job-switching", "Financial instability is normative"],   
-                    chores: ["Managing leases, taxes, adult healthcare", "Civic participation"],   
-                    red: ["Failure to Launch syndrome", "Complete lack of motivation for work", "Action-blocking anxiety"]   
-                }  
-            }  
-        };  
-  
-        let curGen = 'female';  
-        let curAge = "14";  
-        let curCat = 'all';  
-  
-        function setGender(g) {  
-            curGen = g;  
-            document.getElementById('f-btn').className = `flex-1 md:px-8 py-2.5 rounded-lg font-bold text-sm transition-all ${g === 'female'? 'bg-white shadow-sm text-coastal-teal' : 'text-slate-500 hover:bg-slate-200'}`;  
-            document.getElementById('m-btn').className = `flex-1 md:px-8 py-2.5 rounded-lg font-bold text-sm transition-all ${g === 'male'? 'bg-white shadow-sm text-coastal-teal' : 'text-slate-500 hover:bg-slate-200'}`;  
-            renderUI();  
-        }  
-  
-        function setAge(a) { curAge = a; renderUI(); }  
-  
-        function setCategory(c) {  
-            curCat = c;  
-            document.querySelectorAll('.filter-pill').forEach(p => {  
-                p.classList.remove('active');  
-                if(p.id!== 'cat-red') p.className = p.className.replace('bg-coastal-dark text-white', 'bg-slate-100 text-slate-600');  
-            });  
-            const activePill = document.getElementById(`cat-${c}`);  
-            activePill.classList.add('active');  
-            if(c!== 'red') {  
-                activePill.classList.remove('bg-slate-100', 'text-slate-600');  
-            }  
-            renderUI();  
-        }  
-  
-        function renderUI() {  
-            const nav = document.getElementById('age-nav');  
-            nav.innerHTML = '';  
-            const ages = ["11", "12", "13", "14", "15", "16", "17", "18", "19-25"];  
-              
-            ages.forEach(i => {  
-                const b = document.createElement('button');  
-                b.innerText = i === "19-25"? "19-25 (Emerging)" : `Age ${i}`;   
-                b.onclick = () => setAge(i);  
-                b.className = `age-btn px-5 h-10 rounded-lg font-bold text-sm transition-all whitespace-nowrap ${curAge === i? 'active' : 'bg-slate-100 text-slate-500 hover:bg-slate-200'}`;  
-                nav.appendChild(b);  
-            });  
-  
-            const grid = document.getElementById('milestone-grid');  
-            const d = waveData[curGen][curAge];  
-              
-            const panels =;  
-  
-            const filtered = curCat === 'all'? panels : panels.filter(x => x.id === curCat |  
-  
-| x.id === 'red');  
-              
-            grid.innerHTML = filtered.map(x => `  
-                <div class="p-6 rounded-2xl border-t-[6px] shadow-sm hover:shadow-md transition-all ${x.id === 'red'? 'bg-rose-50 border-rose-500' : 'bg-white ' + x.color}">  
-                    <div class="flex items-center gap-3 mb-4">  
-                        <span class="text-2xl">${x.icon}</span>  
-                        <h4 class="font-bold text-slate-900 uppercase text-xs tracking-wider">${x.title}</h4>  
-                    </div>  
-                    <ul class="space-y-3">  
-                        ${x.data.map(item => `<li class="flex items-start gap-2 text-sm text-slate-600 font-medium leading-snug"><span class="${x.id === 'red'? 'text-rose-500' : 'text-coastal-teal'} mt-0.5">•</span><span>${item}</span></li>`).join('')}  
-                    </ul>  
-                </div>`).join('');  
-        }  
-  
-        function initCharts() {  
-            // Chart 1: Growth Velocity  
-            new Chart(document.getElementById('growthChart'), {  
-                type: 'line',  
-                data: {  
-                    labels: ['9', '10', '11', '12', '13', '14', '15', '16', '17', '18'],  
-                    datasets: [  
-                        { label: 'Male (cm/yr)', data: [5.2, 5.0, 5.3, 6.5, 9.5, 8.0, 5.0, 2.0, 0.5, 0.1], borderColor: '#023E8A', backgroundColor: 'rgba(2, 62, 138, 0.1)', fill: true, tension: 0.4 },  
-                        { label: 'Female (cm/yr)', data: [5.5, 6.0, 8.3, 7.0, 4.0, 1.5, 0.5, 0.1, 0, 0], borderColor: '#F43F5E', backgroundColor: 'rgba(244, 63, 94, 0.1)', fill: true, tension: 0.4 }  
-                    ]  
-                },  
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 12 } } } }  
-            });  
-  
-            // Chart 2: Sleep Deficit  
-            new Chart(document.getElementById('sleepChart'), {  
-                type: 'bar',  
-                data: {  
-                    labels: ['Ages 6-12', 'Ages 13-18'],  
-                    datasets:,   
-                        backgroundColor:,  
-                        borderRadius: 6  
-                    }]  
-                },  
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { max: 100, title: { display: true, text: '% of Students' } } } }  
-            });  
-  
-            // Chart 3: Peer Multiplier (Risk-Taking)  
-            new Chart(document.getElementById('riskChart'), {  
-                type: 'bar',  
-                data: {  
-                    labels:,  
-                    datasets: [  
-                        { label: 'Adults', data: [15, 15], backgroundColor: '#94A3B8', borderRadius: 4 },  
-                        { label: 'Adolescents (13-16)', data: [1, 2], backgroundColor: '#F59E0B', borderRadius: 4 }  
-                    ]  
-                },  
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 12 } } }, scales: { y: { title: { display: true, text: 'Risky Decisions Made' } } } }  
-            });  
-  
-            // Chart 4: Screen Time Tax  
-            new Chart(document.getElementById('screenChart'), {  
-                type: 'line',  
-                data: {  
-                    labels: ['0 mins', '30 mins', '60 mins', '90 mins', '120 mins'],  
-                    datasets:,   
-                        borderColor: '#8B5CF6',   
-                        backgroundColor: 'rgba(139, 92, 246, 0.2)',   
-                        fill: true,   
-                        tension: 0.1   
-                    }]  
-                },  
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 12 } } }, scales: { y: { title: { display: true, text: 'Minutes Lost' } } } }  
-            });  
-        }  
-  
-        async function runAiCheck() {  
-            const query = document.getElementById('ai-query').value;  
-            const btn = document.getElementById('ai-btn');  
-            const loader = document.getElementById('ai-loader');  
-            const output = document.getElementById('ai-response');  
-              
-            if (!query.trim()) return;  
-              
-            btn.disabled = true; loader.classList.remove('hidden'); output.classList.add('hidden');  
-              
-            const API_KEY = "YOUR_GEMINI_API_KEY";   
-            try {  
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${API_KEY}`, {  
-                    method: 'POST',  
-                    headers: { 'Content-Type': 'application/json' },  
-                    body: JSON.stringify({  
-                        contents: [{ parts: [{ text: query }] }],  
-                        systemInstruction: { parts: }  
-                    })  
-                });  
-                const data = await response.json();  
-                output.innerText = data.candidates?.?.content?.parts?.?.text |  
-  
-| "The tide is too rough to process this request. Please try again.";  
-                output.classList.remove('hidden');  
-            } catch (error) {   
-                output.innerText = "Connection to the Lifeguard failed. Please check your network.";   
-                output.classList.remove('hidden');   
-            } finally {   
-                btn.disabled = false; loader.classList.add('hidden');   
-            }  
-        }  
-  
-        window.onload = () => { renderUI(); initCharts(); };  
-    </script>  
-</body>  
-</html>  
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Great Wave | Global Parent's Field Guide</title>
+    <meta name="description" content="An exhaustive developmental resource and red-flag guide for parents of adolescents and emerging adults.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Outfit', 'sans-serif'], display: ['Quicksand', 'sans-serif'] },
+                    colors: {
+                        coastal: { teal: '#0077B6', dark: '#023E8A', sand: '#FEFCE8', coral: '#F43F5E', foam: '#E8FBF6' }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+    .age-btn.active { background-color: #0077B6; color: white; transform: scale(1.1); box-shadow: 0 10px 15px -3px rgba(0, 119, 182, 0.4); }
+    .filter-pill.active { background-color: #023E8A; color: white; }
+    .loader { border: 3px solid #f3f3f3; border-top: 3px solid #F43F5E; border-radius: 50%; width: 24px; height: 24px; animation: spin 1s linear infinite; }
+      @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    .wave-divider { position: absolute; bottom: 0; left: 0; width: 100%; overflow: hidden; line-height: 0; transform: rotate(180deg); }
+    .wave-divider svg { position: relative; display: block; width: calc(100% + 1.3px); height: 70px; }
+    .wave-divider.shape-fill { fill: #F8FAFC; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased selection:bg-coastal-foam selection:text-coastal-dark">
+
+    <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 px-6 py-4 flex justify-between items-center shadow-sm">
+        <div class="flex items-center gap-3">
+            <div class="bg-coastal-teal p-2 rounded-xl text-white font-display font-bold text-xl shadow-md">≋</div>
+            <div class="flex flex-col">
+                <span class="font-display font-bold text-slate-900 leading-none text-lg tracking-tight">The Great Wave</span>
+                <span class="text-[10px] font-black text-coastal-teal uppercase tracking-widest">Global Parent Guide</span>
+            </div>
+        </div>
+        <a href="#ai-tide-check" class="bg-coastal-coral text-white text-xs font-bold uppercase px-5 py-2.5 rounded-full hover:bg-rose-600 transition-colors shadow-md">AI Tide Check</a>
+    </nav>
+
+    <header class="relative bg-coastal-foam pt-24 pb-32 px-6 text-center overflow-hidden">
+        <div class="max-w-4xl mx-auto relative z-10">
+            <h1 class="text-5xl md:text-7xl font-display font-bold text-slate-900 mb-6 leading-tight">
+                Adolescent Growth <br/><span class="text-coastal-teal">Cross-Examined.</span>
+            </h1>
+            <p class="text-lg md:text-xl text-slate-600 font-medium mb-10 max-w-2xl mx-auto leading-relaxed">
+                A definitive, coastal-inspired resource for parents navigating the turbulent tides of ages 11–25. Aggregating rigorous clinical benchmarks from the <strong class="text-coastal-dark">WHO, AAP, CPS, and OECD</strong>.
+            </p>
+        </div>
+        <div class="wave-divider">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+            </svg>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-6 -mt-10 mb-20 relative z-20">
+        
+        <section class="bg-white rounded-[2rem] shadow-xl p-8 md:p-12 mb-16 border border-slate-100">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-10">
+                <div>
+                    <h2 class="text-3xl font-display font-bold text-slate-900 mb-2">Milestone Tracker</h2>
+                    <p class="text-slate-500 text-sm">Select biological sex and age to view specific developmental waves.</p>
+                </div>
+                <div class="bg-slate-100 p-1.5 rounded-xl flex gap-1 w-full md:w-auto">
+                    <button onclick="setGender('female')" id="f-btn" class="flex-1 md:px-8 py-2.5 rounded-lg font-bold text-sm transition-all bg-white shadow-sm text-coastal-teal">♀ Female</button>
+                    <button onclick="setGender('male')" id="m-btn" class="flex-1 md:px-8 py-2.5 rounded-lg font-bold text-sm transition-all text-slate-500">♂ Male</button>
+                </div>
+            </div>
+
+            <div class="mb-10 overflow-x-auto pb-4">
+                <div class="flex gap-2 min-w-[700px] md:min-w-0" id="age-nav"></div>
+            </div>
+
+            <div class="flex flex-wrap gap-2 mb-10 border-b border-slate-100 pb-6">
+                <button onclick="setCategory('all')" id="cat-all" class="filter-pill active px-4 py-2 rounded-full text-[11px] font-bold uppercase tracking-wider bg-slate-100 text-slate-600 transition-all hover:bg-slate-200">All</button>
+                <button onclick="setCategory('phys')" id="cat-phys" class="filter-pill px-4 py-2 rounded-full text-[11px] font-bold uppercase tracking-wider bg-slate-100 text-slate-600 transition-all hover:bg-slate-200">Physical</button>
+                <button onclick="setCategory('mind')" id="cat-mind" class="filter-pill px-4 py-2 rounded-full text-[11px] font-bold uppercase tracking-wider bg-slate-100 text-slate-600 transition-all hover:bg-slate-200">Cognitive</button>
+                <button onclick="setCategory('friend')" id="cat-friend" class="filter-pill px-4 py-2 rounded-full text-[11px] font-bold uppercase tracking-wider bg-slate-100 text-slate-600 transition-all hover:bg-slate-200">Friends</button>
+                <button onclick="setCategory('parent')" id="cat-parent" class="filter-pill px-4 py-2 rounded-full text-[11px] font-bold uppercase tracking-wider bg-slate-100 text-slate-600 transition-all hover:bg-slate-200">Parents</button>
+                <button onclick="setCategory('romance')" id="cat-romance" class="filter-pill px-4 py-2 rounded-full text-[11px] font-bold uppercase tracking-wider bg-slate-100 text-slate-600 transition-all hover:bg-slate-200">Romance</button>
+                <button onclick="setCategory('emotion')" id="cat-emotion" class="filter-pill px-4 py-2 rounded-full text-[11px] font-bold uppercase tracking-wider bg-slate-100 text-slate-600 transition-all hover:bg-slate-200">Emotions</button>
+                <button onclick="setCategory('exp')" id="cat-exp" class="filter-pill px-4 py-2 rounded-full text-[11px] font-bold uppercase tracking-wider bg-slate-100 text-slate-600 transition-all hover:bg-slate-200">Boundaries</button>
+                <button onclick="setCategory('chores')" id="cat-chores" class="filter-pill px-4 py-2 rounded-full text-[11px] font-bold uppercase tracking-wider bg-slate-100 text-slate-600 transition-all hover:bg-slate-200">Chores</button>
+                <button onclick="setCategory('red')" id="cat-red" class="filter-pill px-4 py-2 rounded-full text-[11px] font-bold uppercase tracking-wider bg-rose-50 text-rose-600 transition-all hover:bg-rose-100 border border-rose-100">🚩 Red Flags</button>
+            </div>
+
+            <div id="milestone-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
+        </section>
+
+        <section class="mb-24">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-display font-bold text-slate-900 mb-4">Adolescence in Data</h2>
+                <p class="text-slate-500 max-w-2xl mx-auto">Verifiable clinical trends comparing global health benchmarks.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                <div class="bg-white p-8 rounded-[2rem] shadow-lg border border-slate-100 hover:shadow-xl transition-shadow">
+                    <div class="flex justify-between items-start mb-6">
+                        <h3 class="text-xl font-display font-bold text-slate-800">Growth Velocity (cm/yr)</h3>
+                        <span class="px-3 py-1 bg-coastal-foam text-[10px] font-bold text-coastal-teal rounded-full uppercase tracking-wider">WHO / CDC</span>
+                    </div>
+                    <div class="relative w-full h-[250px]">
+                        <canvas id="growthChart"></canvas>
+                    </div>
+                    <p class="text-xs text-slate-400 mt-4 leading-relaxed">Peak Height Velocity (PHV) occurs around 11.5 yrs (8.3 cm/yr) for females, and 13.5 yrs (9.5 cm/yr) for males.</p>
+                </div>
+
+                <div class="bg-white p-8 rounded-[2rem] shadow-lg border border-slate-100 hover:shadow-xl transition-shadow">
+                    <div class="flex justify-between items-start mb-6">
+                        <h3 class="text-xl font-display font-bold text-slate-800">The Sleep Deficit</h3>
+                        <span class="px-3 py-1 bg-rose-50 text-[10px] font-bold text-rose-600 rounded-full uppercase tracking-wider">NSF / CDC</span>
+                    </div>
+                    <div class="relative w-full h-[250px]">
+                        <canvas id="sleepChart"></canvas>
+                    </div>
+                    <p class="text-xs text-slate-400 mt-4 leading-relaxed">Biological requirement (8-10 hours) versus actual reported sleep among North American adolescents (72.7% report under 8 hrs).</p>
+                </div>
+
+                <div class="bg-white p-8 rounded-[2rem] shadow-lg border border-slate-100 hover:shadow-xl transition-shadow">
+                    <div class="flex justify-between items-start mb-6">
+                        <h3 class="text-xl font-display font-bold text-slate-800">The Peer Multiplier</h3>
+                        <span class="px-3 py-1 bg-amber-50 text-[10px] font-bold text-amber-600 rounded-full uppercase tracking-wider">Clinical Data</span>
+                    </div>
+                    <div class="relative w-full h-[250px]">
+                        <canvas id="riskChart"></canvas>
+                    </div>
+                    <p class="text-xs text-slate-400 mt-4 leading-relaxed">In simulated driving tasks, adolescent risk-taking spikes 300% when peers are present. Adult risk-taking remains flat regardless of observation.</p>
+                </div>
+
+                <div class="bg-white p-8 rounded-[2rem] shadow-lg border border-slate-100 hover:shadow-xl transition-shadow">
+                    <div class="flex justify-between items-start mb-6">
+                        <h3 class="text-xl font-display font-bold text-slate-800">The Screen Time Tax</h3>
+                        <span class="px-3 py-1 bg-purple-50 text-[10px] font-bold text-purple-600 rounded-full uppercase tracking-wider">NSF Data</span>
+                    </div>
+                    <div class="relative w-full h-[250px]">
+                        <canvas id="screenChart"></canvas>
+                    </div>
+                    <p class="text-xs text-slate-400 mt-4 leading-relaxed">Adolescents naturally push their bedtime back by approximately 16 minutes for every 30 minutes of high-stimulation screen time before bed.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="ai-tide-check" class="bg-coastal-dark rounded-[2.5rem] p-10 md:p-16 text-white shadow-2xl relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-coastal-teal/20 rounded-full blur-[100px]"></div>
+            <div class="max-w-3xl mx-auto relative z-10">
+                <div class="bg-coastal-teal w-14 h-14 rounded-2xl flex items-center justify-center mb-8 shadow-lg text-2xl">🛟</div>
+                <h2 class="text-3xl md:text-5xl font-display font-bold mb-4">The Lifeguard (AI Tide Check)</h2>
+                <p class="text-coastal-foam mb-8 text-lg opacity-90">Input a specific behavioral concern regarding your adolescent. Our system analyzes it against pediatric guidelines to determine if it represents normative development or a clinical riptide.</p>
+                
+                <div class="space-y-4">
+                    <textarea id="ai-query" placeholder="e.g., My 16-year-old son has completely quit the basketball team, stays in his dark room all weekend, and his grades dropped from B's to F's. Is this normal teenage rebellion?" class="w-full bg-white/10 border border-white/20 rounded-2xl p-6 text-white placeholder-white/50 focus:ring-2 focus:ring-coastal-coral outline-none h-40 transition-all resize-none"></textarea>
+                    <button id="ai-btn" onclick="runAiCheck()" class="w-full py-5 bg-coastal-coral hover:bg-rose-500 text-white font-bold rounded-2xl transition-all flex items-center justify-center gap-3 shadow-lg">
+                        <span>Evaluate Scenario via Clinical Guidelines</span>
+                        <div id="ai-loader" class="loader hidden"></div>
+                    </button>
+                    <div id="ai-response" class="hidden mt-6 bg-white/5 border border-white/10 p-6 rounded-2xl text-slate-200 text-sm leading-relaxed max-h-96 overflow-y-auto whitespace-pre-wrap"></div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-slate-900 py-12 text-center text-slate-400">
+        <p class="text-xs uppercase tracking-widest font-bold mb-4">© 2026 The Great Wave Guide</p>
+        <div class="flex justify-center flex-wrap gap-6 text-[10px] uppercase font-bold opacity-60">
+            <span>WHO Data</span> | <span>AAP Guidelines</span> | <span>CPS Directives</span> | <span>OECD Benchmarks</span>
+        </div>
+    </footer>
+
+    <script>
+        // Completely Repaired Database Structure
+        const waveData = {
+            female: {
+                "11": { 
+                    phys:, 
+                    mind: ["Concrete thinking", "Focuses primarily on the present"], 
+                    friend: ["Heavy focus on peer validation emerges", "Formation of strong, same-sex friendships", "Obsession with fitting in begins"], 
+                    parent:, 
+                    romance: ["Crushes from afar", "Mixed-sex group socializing"], 
+                    emotion: ["Unpredictable mood shifts due to hormones"], 
+                    exp: ["Pushing back against standard household rules"], 
+                    chores:, 
+                    red: ["Extreme body weight obsession", "Persistent social withdrawal"] 
+                },
+                "12": { 
+                    phys: ["Peak Height Velocity typically reached", "Menarche (first menstruation) average onset"], 
+                    mind: ["Abstract thinking improves", "Understands long-term effects conceptually"], 
+                    friend: ["High sensitivity to social media status", "Friend group becomes primary support source"], 
+                    parent: ["Increased need for physical privacy (closed doors)", "Parental advice often rejected for peer advice"], 
+                    romance: ["Increased curiosity about dating", "Early exploration of sexual identity"], 
+                    emotion: ["Operates under 'hot cognition' (impulse over logic)", "Highly sensitive to peer feedback"], 
+                    exp:, 
+                    chores:, 
+                    red: 
+                },
+                "13": { 
+                    phys: ["Growth velocity begins to slow", "Establishment of regular ovulatory cycles"], 
+                    mind:, 
+                    friend: ["Friendships deepen in commitment and intimacy", "Peer pressure reaches its absolute peak"], 
+                    parent: ["Conflict increases as teen demands behavioral autonomy", "Questions family social norms and authority"], 
+                    romance: ["Genuine interest in dating partnerships begins", "Early relationships serve as practice for empathy"], 
+                    emotion: ["Autonomy vs. connection struggle"], 
+                    exp:, 
+                    chores: ["Handling own laundry entirely", "Cooking simple meals independently"], 
+                    red: 
+                },
+                "14": { 
+                    phys: ["Near final adult height", "Circadian shift pushes natural sleep time later"], 
+                    mind: ["Abstract thinking and moral reasoning sharpen", "Can debate complex viewpoints"], 
+                    friend:, 
+                    parent:, 
+                    romance:, 
+                    emotion:, 
+                    exp: ["Experimentation with minor rebellion", "Highest susceptibility to peer presence for risk"], 
+                    chores: ["Mowing the yard", "Making and packing own lunches"], 
+                    red: 
+                },
+                "15": { 
+                    phys: ["Final brain pruning phase begins", "Physical changes of puberty are mostly complete"], 
+                    mind: ["More defined sense of identity and self-esteem", "Considers future and career possibilities"], 
+                    friend: ["Friendships based on shared values, not just proximity", "Nuanced and meaningful peer support"], 
+                    parent: ["Conflict often peaks and begins to subside"], 
+                    romance:, 
+                    emotion: ["Improved integration of thought and emotion", "Able to put 'brakes' on emotional intensity"], 
+                    exp:, 
+                    chores:, 
+                    red: ["Chronic apathy/loss of interest", "Excessive daytime sleepiness"] 
+                },
+                "16": { 
+                    phys: ["Full skeletal maturity reached", "Neurological myelination improves transmission speed"], 
+                    mind: ["Improved impulse control emerges"], 
+                    friend: ["Intimate self-disclosure in friendships", "Friendships serve as templates for adulthood"], 
+                    parent: ["Arguments shift from rules to future-planning"], 
+                    romance: ["Navigating complex emotional partnerships", "Understanding of physical boundaries solidifies"], 
+                    emotion: ["Emotional volatility decreases"], 
+                    exp:, 
+                    chores:, 
+                    red: 
+                },
+                "17": { 
+                    phys: ["Final height reached", "Prefrontal cortex thickening continues"], 
+                    mind:, 
+                    friend:, 
+                    parent: ["Adult-to-adult dynamic begins", "Parents viewed as resources rather than wardens"], 
+                    romance: ["Capacity for long-term commitment solidifies"], 
+                    emotion: ["Capable of handling significant compounding stress", "Less mood volatility than early teens"], 
+                    exp:, 
+                    chores: ["Household financial planning basics", "Health insurance basics"], 
+                    red: ["Inability to plan 3 months ahead", "Complete social isolation"] 
+                },
+                "18": { 
+                    phys: ["Peak adult physical stamina", "Circadian rhythm begins to normalize"], 
+                    mind: ["Legal autonomy achieved", "Consolidation of personal ethical frameworks"], 
+                    friend: ["Managing friendships while balancing extreme life changes (college/work)", "Lifelong bonds cemented"], 
+                    parent: ["Full separation of behavioral dependence", "Negotiating living-at-home boundaries if applicable"], 
+                    romance: ["Maintenance of long-term romantic partnerships", "Navigating shared living or long-distance"], 
+                    emotion: ["Nearing adult emotional maturity"], 
+                    exp: ["Legal consequences apply to risk-taking"], 
+                    chores: ["Lease and tax basics", "Fully managing a personal schedule"], 
+                    red: ["Heavy escapism (excessive gaming/drinking)", "Any expression of hopelessness/self-harm"] 
+                },
+                "19-25": { 
+                    phys: ["Prefrontal cortex reaches final structural maturity (around 25)", "Peak bone mass achieved"], 
+                    mind: ["High capacity for dialectical thinking", "Cementing personal philosophies and civic identity"], 
+                    friend: ["Focus shifts to quality over quantity", "Curation of social circles based on goals"], 
+                    parent:, 
+                    romance:, 
+                    emotion: ["Full emotional regulation capacity", "Managing compounding adult stresses (bills, career)"], 
+                    exp: ["Career exploration and job-switching", "Financial and geographical instability is normative"], 
+                    chores: ["Managing leases, taxes, and adult healthcare systems", "Civic participation (voting, community)"], 
+                    red: ["'Failure to Launch' (action-blocking anxiety)", "Complete lack of motivation for work/education", "Persistent social isolation to a childhood bedroom"] 
+                }
+            },
+            male: {
+                "11": { 
+                    phys:, 
+                    mind:, 
+                    friend:, 
+                    parent: ["Aloofness towards family events"], 
+                    romance: ["Group mixed-sex socializing", "Minimal individual dating interest"], 
+                    emotion:, 
+                    exp: ["Exploring physical limits in play"], 
+                    chores:, 
+                    red: ["Uncontrolled physical aggression", "Obsessive screen fixation"] 
+                },
+                "12": { 
+                    phys: ["Pubic hair onset", "Growth spurt may slowly begin", "Clumsiness increases"], 
+                    mind: ["Abstract thinking concepts start to form", "Imaginary audience syndrome"], 
+                    friend:, 
+                    parent:, 
+                    romance: ["First crushes from afar", "Curiosity about physical intimacy"], 
+                    emotion: ["Hot cognition (impulse over logic)", "Vulnerability often masked by teasing"], 
+                    exp: ["Exploring physical limits", "Curiosity about rule-breaking"], 
+                    chores:, 
+                    red: 
+                },
+                "13": { 
+                    phys: ["Onset of major growth spurt (Peak Height Velocity approaches)", "Voice cracking and early facial hair"], 
+                    mind: ["High dopamine sensitivity"], 
+                    friend: ["Peer pressure begins to peak"], 
+                    parent: ["Argumentative push for behavioral autonomy", "High conflict over family rules"], 
+                    romance: ["Awkward flirtation stages"], 
+                    emotion:, 
+                    exp:, 
+                    chores: ["Complete own laundry", "Managing own morning alarms"], 
+                    red: ["Involvement with dangerous/older peer groups", "Extreme defiance"] 
+                },
+                "14": { 
+                    phys: ["Peak Height Velocity (avg 13.5 - 14 yrs)", "Nocturnal emissions ('wet dreams')"], 
+                    mind:, 
+                    friend: ["Complex peer networks", "Understanding of others' perspectives grows"], 
+                    parent: ["Conflict with male authority figures peaks"], 
+                    romance: ["Interest in defined dating"], 
+                    emotion: ["Masking insecurities with bravado"], 
+                    exp: ["Highest susceptibility to peer presence for risk", "Experimentation with minor rebellion"], 
+                    chores:, 
+                    red: 
+                },
+                "15": { 
+                    phys: ["Facial and underarm hair thickens", "Acne may peak"], 
+                    mind: ["More defined sense of identity", "Considers career possibilities"], 
+                    friend: ["Friendships based on shared values", "Meaningful peer support"], 
+                    parent: ["Conflict begins to gradually decrease", "Complex understanding of parents"], 
+                    romance: ["More stable romantic interests"], 
+                    emotion: ["Formation of personal 'honor codes'"], 
+                    exp:, 
+                    chores:, 
+                    red: ["Chronic apathy", "Loss of interest in previously loved sports"] 
+                },
+                "16": { 
+                    phys:, 
+                    mind: ["Vocational future focus"], 
+                    friend:, 
+                    parent:, 
+                    romance: ["Navigating complex emotional partnerships", "Physical boundary understanding solidifies"], 
+                    emotion: ["Improved impulse control"], 
+                    exp:, 
+                    chores: ["Independent banking and savings goals"], 
+                    red: 
+                },
+                "17": { 
+                    phys: ["Final height reached or nearing completion", "Facial hair stabilizes"], 
+                    mind: ["Core value definition"], 
+                    friend: ["Quality over quantity in peer groups"], 
+                    parent: ["Adult-to-adult dynamic begins", "Parents viewed as resources"], 
+                    romance: ["Capacity for commitment"], 
+                    emotion: ["Capable of handling significant stress", "Less mood volatility"], 
+                    exp:, 
+                    chores:, 
+                    red: ["Lack of future motivation", "Isolation from friends/family"] 
+                },
+                "18": { 
+                    phys: ["Full skeletal and muscular maturity", "Circadian rhythm normalizes"], 
+                    mind: ["Legal autonomy achieved", "Consolidation of ethical frameworks"], 
+                    friend: ["Managing friendships through life changes", "Lifelong bonds cemented"], 
+                    parent: ["Full separation of behavioral dependence", "Negotiating living-at-home boundaries"], 
+                    romance: ["Maintenance of long-term partnerships", "Navigating shared living"], 
+                    emotion: ["Nearing adult emotional maturity"], 
+                    exp: ["Calculated career/education risks", "Legal consequences apply"], 
+                    chores: ["Independent living management"], 
+                    red: ["Heavy escapism (gaming/drinking)", "Expression of hopelessness"] 
+                },
+                "19-25": { 
+                    phys: ["Prefrontal cortex finishes structural maturity", "Peak adult strength achieved"], 
+                    mind: ["High capacity for dialectical thinking", "Cementing personal philosophies"], 
+                    friend: ["Active curation of social circles based on life goals"], 
+                    parent:, 
+                    romance: ["Navigating marriage or long-term partnerships"], 
+                    emotion: ["Full emotional regulation capacity", "Managing compounding adult stresses"], 
+                    exp: ["Career exploration and job-switching", "Financial instability is normative"], 
+                    chores: ["Managing leases, taxes, adult healthcare", "Civic participation"], 
+                    red: ["Failure to Launch syndrome", "Complete lack of motivation for work", "Action-blocking anxiety"] 
+                }
+            }
+        };
+
+        let curGen = 'female';
+        let curAge = "14";
+        let curCat = 'all';
+
+        function setGender(g) {
+            curGen = g;
+            document.getElementById('f-btn').className = `flex-1 md:px-8 py-2.5 rounded-lg font-bold text-sm transition-all ${g === 'female'? 'bg-white shadow-sm text-coastal-teal' : 'text-slate-500 hover:bg-slate-200'}`;
+            document.getElementById('m-btn').className = `flex-1 md:px-8 py-2.5 rounded-lg font-bold text-sm transition-all ${g === 'male'? 'bg-white shadow-sm text-coastal-teal' : 'text-slate-500 hover:bg-slate-200'}`;
+            renderUI();
+        }
+
+        function setAge(a) { curAge = a; renderUI(); }
+
+        function setCategory(c) {
+            curCat = c;
+            document.querySelectorAll('.filter-pill').forEach(p => {
+                p.classList.remove('active');
+                if(p.id!== 'cat-red') p.className = p.className.replace('bg-coastal-dark text-white', 'bg-slate-100 text-slate-600');
+            });
+            const activePill = document.getElementById(`cat-${c}`);
+            activePill.classList.add('active');
+            if(c!== 'red') {
+                activePill.classList.remove('bg-slate-100', 'text-slate-600');
+                activePill.classList.add('bg-coastal-dark', 'text-white');
+            }
+            renderUI();
+        }
+
+        function renderUI() {
+            const nav = document.getElementById('age-nav');
+            nav.innerHTML = '';
+            const ages = ["11", "12", "13", "14", "15", "16", "17", "18", "19-25"];
+            
+            ages.forEach(i => {
+                const b = document.createElement('button');
+                b.innerText = i === "19-25"? "19-25 (Emerging)" : `Age ${i}`; 
+                b.onclick = () => setAge(i);
+                b.className = `age-btn px-5 h-10 rounded-lg font-bold text-sm transition-all whitespace-nowrap ${curAge === i? 'active' : 'bg-slate-100 text-slate-500 hover:bg-slate-200'}`;
+                nav.appendChild(b);
+            });
+
+            const grid = document.getElementById('milestone-grid');
+            const d = waveData[curGen][curAge];
+            
+            const panels =.filter(p => p.data && p.data.length > 0);
+
+            const filtered = curCat === 'all'? panels : panels.filter(x => x.id === curCat |
+
+| x.id === 'red');
+            
+            grid.innerHTML = filtered.map(x => `
+                <div class="p-6 rounded-2xl border-t-[6px] shadow-sm hover:shadow-md transition-all ${x.id === 'red'? 'bg-rose-50 border-rose-500' : 'bg-white ' + x.color}">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="text-2xl">${x.icon}</span>
+                        <h4 class="font-bold text-slate-900 uppercase text-xs tracking-wider">${x.title}</h4>
+                    </div>
+                    <ul class="space-y-3">
+                        ${x.data.map(item => `<li class="flex items-start gap-2 text-sm text-slate-600 font-medium leading-snug"><span class="${x.id === 'red'? 'text-rose-500' : 'text-coastal-teal'} mt-0.5">•</span><span>${item}</span></li>`).join('')}
+                    </ul>
+                </div>`).join('');
+        }
+
+        function initCharts() {
+            // Chart 1: Growth Velocity
+            new Chart(document.getElementById('growthChart'), {
+                type: 'line',
+                data: {
+                    labels: ['9', '10', '11', '12', '13', '14', '15', '16', '17', '18'],
+                    datasets: [
+                        { label: 'Male (cm/yr)', data: [5.2, 5.0, 5.3, 6.5, 9.5, 8.0, 5.0, 2.0, 0.5, 0.1], borderColor: '#023E8A', backgroundColor: 'rgba(2, 62, 138, 0.1)', fill: true, tension: 0.4 },
+                        { label: 'Female (cm/yr)', data: [5.5, 6.0, 8.3, 7.0, 4.0, 1.5, 0.5, 0.1, 0, 0], borderColor: '#F43F5E', backgroundColor: 'rgba(244, 63, 94, 0.1)', fill: true, tension: 0.4 }
+                    ]
+                },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 12 } } } }
+            });
+
+            // Chart 2: Sleep Deficit
+            new Chart(document.getElementById('sleepChart'), {
+                type: 'bar',
+                data: {
+                    labels: ['Ages 6-12', 'Ages 13-18'],
+                    datasets:, 
+                        backgroundColor: '#F43F5E',
+                        borderRadius: 6
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { max: 100, title: { display: true, text: '% of Students' } } } }
+            });
+
+            // Chart 3: Peer Multiplier (Risk-Taking)
+            new Chart(document.getElementById('riskChart'), {
+                type: 'bar',
+                data: {
+                    labels:,
+                    datasets: [
+                        { label: 'Adults', data: [15, 15], backgroundColor: '#94A3B8', borderRadius: 4 },
+                        { label: 'Adolescents (13-16)', data: [1, 2], backgroundColor: '#F59E0B', borderRadius: 4 }
+                    ]
+                },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 12 } } }, scales: { y: { title: { display: true, text: 'Risky Decisions Made' } } } }
+            });
+
+            // Chart 4: Screen Time Tax
+            new Chart(document.getElementById('screenChart'), {
+                type: 'line',
+                data: {
+                    labels: ['0 mins', '30 mins', '60 mins', '90 mins', '120 mins'],
+                    datasets:, 
+                        borderColor: '#8B5CF6', 
+                        backgroundColor: 'rgba(139, 92, 246, 0.2)', 
+                        fill: true, 
+                        tension: 0.1 
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 12 } } }, scales: { y: { title: { display: true, text: 'Minutes Lost' } } } }
+            });
+        }
+
+        async function runAiCheck() {
+            const query = document.getElementById('ai-query').value;
+            const btn = document.getElementById('ai-btn');
+            const loader = document.getElementById('ai-loader');
+            const output = document.getElementById('ai-response');
+            
+            if (!query.trim()) return;
+            
+            btn.disabled = true; loader.classList.remove('hidden'); output.classList.add('hidden');
+            
+            const API_KEY = "YOUR_GEMINI_API_KEY"; 
+            try {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${API_KEY}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: query }] }],
+                        systemInstruction: { parts: }
+                    })
+                });
+                const data = await response.json();
+                output.innerText = data.candidates?.?.content?.parts?.?.text |
+
+| "The tide is too rough to process this request. Please try again.";
+                output.classList.remove('hidden');
+            } catch (error) { 
+                output.innerText = "Connection to the Lifeguard failed. Please check your network."; 
+                output.classList.remove('hidden'); 
+            } finally { 
+                btn.disabled = false; loader.classList.add('hidden'); 
+            }
+        }
+
+        window.onload = () => { renderUI(); initCharts(); };
+    </script>
+</body>
+</html>
