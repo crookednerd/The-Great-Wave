@@ -7,520 +7,620 @@
     <meta name="description" content="An exhaustive developmental resource and red-flag guide for parents of adolescents and emerging adults.">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;800&family=Quicksand:wght@500;700;800&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: { sans: ['Outfit', 'sans-serif'], display: ['Quicksand', 'sans-serif'] },
                     colors: {
-                        coastal: { teal: '#0077B6', dark: '#023E8A', sand: '#FEFCE8', coral: '#F43F5E', foam: '#E8FBF6', deep: '#03045E' }
+                        coastal: { teal: '#0D9488', dark: '#0F172A', sand: '#FEFCE8', coral: '#F43F5E', foam: '#E8FBF6', wave: '#023E8A' }
                     }
                 }
             }
         }
     </script>
     <style>
-        body { background-color: #F8FAFC; overflow: hidden; } /* Prevent double scrollbars in dashboard layout */
-       .age-btn.active { background-color: #0077B6; color: white; transform: scale(1.1); box-shadow: 0 10px 15px -3px rgba(0, 119, 182, 0.4); }
-       .nav-item.active { background-color: #E8FBF6; color: #0077B6; border-right: 4px solid #0077B6; font-weight: 800; }
+        body { background-color: #F8FAFC; overflow-x: hidden; }
+       .age-btn.active { background-color: #0D9488; color: white; transform: scale(1.05); box-shadow: 0 10px 15px -3px rgba(13, 148, 136, 0.3); border-color: #0D9488; }
+       .nav-item { transition: all 0.2s ease-in-out; border-left: 4px solid transparent; }
+       .nav-item.active { background-color: #E8FBF6; color: #0D9488; border-left: 4px solid #0D9488; font-weight: 800; }
        .hide-scrollbar::-webkit-scrollbar { display: none; }
        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+       .glass-panel { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.2); }
     </style>
 </head>
-<body class="text-slate-800 antialiased flex h-screen w-full selection:bg-coastal-foam selection:text-coastal-dark">
-
-    <div class="md:hidden fixed top-0 left-0 right-0 h-16 bg-white border-b border-slate-200 z-50 flex items-center justify-between px-4 shadow-sm">
-        <div class="flex items-center gap-2">
-            <button onclick="toggleMobileMenu()" class="bg-coastal-teal p-2 rounded-lg text-white font-bold text-xl shadow-md hover:bg-coastal-dark transition">≋</button>
-            <span class="font-display font-bold text-slate-900 leading-none text-lg tracking-tight">The Great Wave</span>
+<body class="text-slate-800 antialiased flex h-screen w-full selection:bg-coastal-foam selection:text-coastal-teal">
+    <div class="md:hidden fixed top-0 left-0 right-0 h-16 bg-white/90 backdrop-blur-md border-b border-slate-200 z-50 flex items-center justify-between px-4 shadow-sm">
+        <div class="flex items-center gap-3">
+            <button onclick="toggleMobileMenu()" class="bg-coastal-teal p-2 rounded-xl text-white font-black text-xl shadow-md hover:bg-teal-700 transition">≋</button>
+            <span class="font-display font-bold text-slate-900 leading-none text-xl tracking-tight">The Great Wave</span>
         </div>
     </div>
-
-    <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-64 bg-white shadow-2xl transform -translate-x-full md:translate-x-0 md:relative md:flex flex-col transition-transform duration-300 ease-in-out border-r border-slate-100">
-        <div class="h-24 flex items-center gap-3 px-6 border-b border-slate-100 hidden md:flex">
-            <div class="bg-coastal-teal p-2 rounded-xl text-white font-display font-bold text-2xl shadow-md">≋</div>
+    <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-72 bg-white shadow-2xl transform -translate-x-full md:translate-x-0 md:relative md:flex flex-col transition-transform duration-300 ease-in-out border-r border-slate-100 flex-shrink-0">
+        <div class="h-24 flex items-center gap-3 px-8 border-b border-slate-100 hidden md:flex bg-slate-50/50">
+            <div class="bg-coastal-teal p-2.5 rounded-xl text-white font-display font-black text-2xl shadow-lg shadow-teal-200">≋</div>
             <div class="flex flex-col">
-                <span class="font-display font-bold text-slate-900 leading-none text-xl tracking-tight">The Great Wave</span>
-                <span class="text-[9px] font-black text-coastal-teal uppercase tracking-widest">Global Parent Guide</span>
+                <span class="font-display font-extrabold text-slate-900 leading-none text-xl tracking-tight">The Great Wave</span>
+                <span class="text-[10px] font-black text-coastal-teal uppercase tracking-widest mt-1">Global Parent Guide</span>
             </div>
         </div>
+        <div class="flex-1 overflow-y-auto py-8 flex flex-col gap-1 mt-16 md:mt-0">
+            <p class="px-8 text-[11px] font-black text-slate-400 uppercase tracking-widest mb-3">Development Areas</p>
 
-        <div class="flex-1 overflow-y-auto py-6 flex flex-col gap-2 mt-16 md:mt-0">
-            <p class="px-6 text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Development Areas</p>
-            <button onclick="setCategory('all'); toggleMobileMenu(true)" id="nav-all" class="nav-item active flex items-center gap-3 px-6 py-3 text-sm font-semibold text-slate-500 hover:bg-slate-50 transition-colors text-left">
-                <span class="text-lg">🌊</span> Overview View
+            <button onclick="setCategory('phys')" id="nav-phys" class="nav-item active flex items-center gap-4 px-8 py-3.5 text-sm font-semibold text-slate-600 hover:bg-slate-50 text-left">
+                <span class="text-xl">🏄</span> Physical & Puberty
             </button>
-            <button onclick="setCategory('phys'); toggleMobileMenu(true)" id="nav-phys" class="nav-item flex items-center gap-3 px-6 py-3 text-sm font-semibold text-slate-500 hover:bg-slate-50 transition-colors text-left">
-                <span class="text-lg">🏄</span> Physical Dev.
+            <button onclick="setCategory('mind')" id="nav-mind" class="nav-item flex items-center gap-4 px-8 py-3.5 text-sm font-semibold text-slate-600 hover:bg-slate-50 text-left">
+                <span class="text-xl">🧠</span> Cognitive & Focus
             </button>
-            <button onclick="setCategory('mind'); toggleMobileMenu(true)" id="nav-mind" class="nav-item flex items-center gap-3 px-6 py-3 text-sm font-semibold text-slate-500 hover:bg-slate-50 transition-colors text-left">
-                <span class="text-lg">🧠</span> Cognitive
+            <button onclick="setCategory('emotion')" id="nav-emotion" class="nav-item flex items-center gap-4 px-8 py-3.5 text-sm font-semibold text-slate-600 hover:bg-slate-50 text-left">
+                <span class="text-xl">🌊</span> Emotional Regulation
             </button>
-            <button onclick="setCategory('emotion'); toggleMobileMenu(true)" id="nav-emotion" class="nav-item flex items-center gap-3 px-6 py-3 text-sm font-semibold text-slate-500 hover:bg-slate-50 transition-colors text-left">
-                <span class="text-lg">🎭</span> Emotional Reg.
+            <button onclick="setCategory('parent')" id="nav-parent" class="nav-item flex items-center gap-4 px-8 py-3.5 text-sm font-semibold text-slate-600 hover:bg-slate-50 text-left">
+                <span class="text-xl">🏠</span> Parent Relationship
             </button>
-            <button onclick="setCategory('parent'); toggleMobileMenu(true)" id="nav-parent" class="nav-item flex items-center gap-3 px-6 py-3 text-sm font-semibold text-slate-500 hover:bg-slate-50 transition-colors text-left">
-                <span class="text-lg">🏠</span> Parents
+            <button onclick="setCategory('friend')" id="nav-friend" class="nav-item flex items-center gap-4 px-8 py-3.5 text-sm font-semibold text-slate-600 hover:bg-slate-50 text-left">
+                <span class="text-xl">🤙</span> Friendships & Peers
             </button>
-            <button onclick="setCategory('friend'); toggleMobileMenu(true)" id="nav-friend" class="nav-item flex items-center gap-3 px-6 py-3 text-sm font-semibold text-slate-500 hover:bg-slate-50 transition-colors text-left">
-                <span class="text-lg">🤙</span> Friendships
+            <button onclick="setCategory('romance')" id="nav-romance" class="nav-item flex items-center gap-4 px-8 py-3.5 text-sm font-semibold text-slate-600 hover:bg-slate-50 text-left">
+                <span class="text-xl">❤️</span> Romantic Interests
             </button>
-            <button onclick="setCategory('romance'); toggleMobileMenu(true)" id="nav-romance" class="nav-item flex items-center gap-3 px-6 py-3 text-sm font-semibold text-slate-500 hover:bg-slate-50 transition-colors text-left">
-                <span class="text-lg">❤️</span> Romance
+            <button onclick="setCategory('exp')" id="nav-exp" class="nav-item flex items-center gap-4 px-8 py-3.5 text-sm font-semibold text-slate-600 hover:bg-slate-50 text-left">
+                <span class="text-xl">🛹</span> Risk & Boundaries
             </button>
-            <button onclick="setCategory('exp'); toggleMobileMenu(true)" id="nav-exp" class="nav-item flex items-center gap-3 px-6 py-3 text-sm font-semibold text-slate-500 hover:bg-slate-50 transition-colors text-left">
-                <span class="text-lg">🛹</span> Boundaries
-            </button>
-            <button onclick="setCategory('chores'); toggleMobileMenu(true)" id="nav-chores" class="nav-item flex items-center gap-3 px-6 py-3 text-sm font-semibold text-slate-500 hover:bg-slate-50 transition-colors text-left">
-                <span class="text-lg">🧹</span> Chores
-            </button>
-            <button onclick="setCategory('red'); toggleMobileMenu(true)" id="nav-red" class="nav-item flex items-center gap-3 px-6 py-3 text-sm font-semibold text-rose-500 hover:bg-rose-50 transition-colors text-left mt-4 border-t border-slate-100">
-                <span class="text-lg">🚩</span> Red Flags
+            <button onclick="setCategory('chores')" id="nav-chores" class="nav-item flex items-center gap-4 px-8 py-3.5 text-sm font-semibold text-slate-600 hover:bg-slate-50 text-left">
+                <span class="text-xl">🧹</span> Responsibilities
             </button>
         </div>
-        <div class="p-6 border-t border-slate-100 text-[9px] text-slate-400 font-bold uppercase tracking-wider">
-            Verified Data:<br/>WHO, CDC, AAP, OECD
+        <div class="p-6 bg-slate-50 border-t border-slate-200">
+            <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider leading-relaxed">
+                Data Aggregated From:<br/>
+                <span class="text-coastal-teal">WHO • AAP • CPS • CDC</span>
+            </p>
         </div>
     </aside>
+    <div id="mobile-overlay" onclick="toggleMobileMenu()" class="fixed inset-0 bg-slate-900/60 z-30 hidden md:hidden backdrop-blur-sm transition-opacity"></div>
+    <main class="flex-1 flex flex-col h-screen overflow-hidden bg-[#F8FAFC] pt-16 md:pt-0 relative">
 
-    <div id="mobile-overlay" onclick="toggleMobileMenu()" class="fixed inset-0 bg-slate-900/50 z-30 hidden md:hidden backdrop-blur-sm transition-opacity"></div>
+        <div class="absolute top-0 right-0 w-96 h-96 bg-teal-200/20 rounded-full blur-[100px] pointer-events-none"></div>
+        <div class="absolute bottom-0 left-0 w-96 h-96 bg-rose-200/20 rounded-full blur-[100px] pointer-events-none"></div>
+        <div class="glass-panel border-b border-slate-200 shadow-sm z-20 flex-shrink-0 sticky top-0">
+            <div class="max-w-6xl mx-auto px-6 md:px-10 py-6">
 
-    <main class="flex-1 flex flex-col h-screen overflow-hidden bg-slate-50 pt-16 md:pt-0">
+                <div class="flex flex-col lg:flex-row justify-between lg:items-end gap-6 mb-6">
+                    <div>
+                        <span id="section-icon" class="text-4xl mb-2 block">🏄</span>
+                        <h1 class="text-4xl md:text-5xl font-display font-extrabold text-slate-900 tracking-tight" id="section-title">Physical Dev.</h1>
+                        <p class="text-slate-500 font-medium mt-2" id="section-subtitle">Evaluating biological growth, puberty markers, and physical health.</p>
+                    </div>
 
-        <div class="bg-white/80 backdrop-blur-md border-b border-slate-200 shadow-sm z-20 flex-shrink-0">
-            <div class="max-w-6xl mx-auto px-6 py-5">
-
-                <div class="flex flex-col lg:flex-row justify-between lg:items-center gap-4 mb-4">
-                    <h1 class="text-2xl font-display font-bold text-slate-900" id="section-title">Development Overview</h1>
-
-                    <div class="bg-slate-100 p-1.5 rounded-xl flex gap-1 w-full lg:w-auto shadow-inner">
-                        <button onclick="setGender('female')" id="f-btn" class="flex-1 lg:px-8 py-2 rounded-lg font-bold text-sm transition-all bg-white shadow text-coastal-teal">♀ Female</button>
-                        <button onclick="setGender('male')" id="m-btn" class="flex-1 lg:px-8 py-2 rounded-lg font-bold text-sm transition-all text-slate-500 hover:text-slate-700">♂ Male</button>
+                    <div class="bg-slate-100/80 p-1.5 rounded-2xl flex gap-1 w-full lg:w-auto shadow-inner border border-slate-200">
+                        <button onclick="setGender('female')" id="f-btn" class="flex-1 lg:px-10 py-2.5 rounded-xl font-bold text-sm transition-all bg-white shadow-sm text-coastal-teal">♀ Female Data</button>
+                        <button onclick="setGender('male')" id="m-btn" class="flex-1 lg:px-10 py-2.5 rounded-xl font-bold text-sm transition-all text-slate-500 hover:text-slate-700 hover:bg-slate-200/50">♂ Male Data</button>
                     </div>
                 </div>
-
-                <div class="relative flex items-center w-full">
-                    <div class="text-xs font-bold uppercase tracking-wider text-slate-400 mr-4 hidden md:block">Select Age:</div>
-                    <div class="flex gap-2 overflow-x-auto hide-scrollbar w-full pb-2" id="age-nav">
+                <div class="relative flex items-center w-full pt-2">
+                    <div class="flex gap-2.5 overflow-x-auto hide-scrollbar w-full pb-2" id="age-nav">
                         </div>
                 </div>
             </div>
         </div>
+        <div class="flex-1 overflow-y-auto p-6 md:p-10 scroll-smooth relative z-10">
+            <div class="max-w-6xl mx-auto pb-24">
 
-        <div class="flex-1 overflow-y-auto p-6 md:p-10 scroll-smooth">
-            <div class="max-w-6xl mx-auto pb-20">
-
-                <div id="dynamic-charts" class="mb-10 grid grid-cols-1 lg:grid-cols-2 gap-6 hidden">
+                <div id="dynamic-chart-container" class="mb-10 bg-white p-8 rounded-[2.5rem] shadow-xl shadow-slate-200/50 border border-slate-100 hidden">
+                    <div class="flex justify-between items-start mb-6">
+                        <div>
+                            <h3 class="text-2xl font-display font-bold text-slate-800" id="chart-title">Chart Title</h3>
+                            <p class="text-sm text-slate-500 font-medium mt-1" id="chart-subtitle">Chart Subtitle</p>
+                        </div>
+                        <span class="px-4 py-1.5 text-[10px] font-black uppercase tracking-widest rounded-full bg-slate-100 text-slate-500" id="chart-source">Source</span>
                     </div>
-
-                <div id="milestone-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                    <div class="relative w-full h-[300px]">
+                        <canvas id="active-chart"></canvas>
                     </div>
-
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="bg-white rounded-[2.5rem] p-8 md:p-10 shadow-lg border-t-8 border-t-emerald-400 border border-slate-100 h-fit">
+                        <div class="flex items-center gap-4 mb-8 pb-6 border-b border-slate-100">
+                            <div class="w-12 h-12 rounded-2xl bg-emerald-50 flex items-center justify-center text-emerald-500 text-2xl shadow-inner">🟢</div>
+                            <div>
+                                <h3 class="font-display font-bold text-2xl text-slate-900">Green Flags</h3>
+                                <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Normal Development</p>
+                            </div>
+                        </div>
+                        <ul id="green-flags-list" class="space-y-5">
+                            </ul>
+                    </div>
+                    <div class="bg-white rounded-[2.5rem] p-8 md:p-10 shadow-lg border-t-8 border-t-rose-500 border border-slate-100 h-fit relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-rose-50 rounded-bl-full -z-10"></div>
+                        <div class="flex items-center gap-4 mb-8 pb-6 border-b border-slate-100">
+                            <div class="w-12 h-12 rounded-2xl bg-rose-100 flex items-center justify-center text-rose-600 text-2xl shadow-inner">🚩</div>
+                            <div>
+                                <h3 class="font-display font-bold text-2xl text-slate-900">Red Flags</h3>
+                                <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Clinical Warning Signs</p>
+                            </div>
+                        </div>
+                        <ul id="red-flags-list" class="space-y-5">
+                            </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
-
     <script>
-        // Comprehensive Dataset for Ages 11 to 25
+        // --- COMPREHENSIVE DATASET (Ages 11-25, Male & Female, All Categories) ---
         const waveData = {
             female: {
-                "11": {
-                    phys: [],
-                    mind: ["Concrete thinking transitioning to abstract", "Focuses primarily on the present", "Egocentrism peaks; feels constantly observed"],
-                    friend: ["Heavy focus on peer validation emerges", "Formation of strong, same-sex friendships", "Obsession with fitting in begins"],
-                    parent: ["Periods of being sullen and aloof", "Losing interest in family matters", "Increased desire for independence"],
-                    romance: ["Crushes from afar", "Mixed-sex group socializing", "Minimal formal dating"],
-                    emotion: [],
-                    exp: [],
-                    chores: ["Can clean their own room", "Help with meal preparation", "Organizing school materials independently"],
-                    red_phys: ["Extreme body weight obsession", "Refusing to eat or binge eating patterns"],
-                    red_mind: ["Inability to focus on any task for more than a few minutes", "Severe regression in academic performance"],
-                    red_friend: ["Persistent social withdrawal", "Complete avoidance of all peer interaction"],
-                    red_parent: ["Extreme hostility or violence toward family members"],
-                    red_romance: [],
-                    red_emotion: ["Uncontrolled physical aggression", "Frequent emotional meltdowns lasting hours"],
-                    red_exp: ["Fire-setting or cruelty to animals"],
-                    red_chores: []
+                "11-12": {
+                    phys: {
+                        green: ["Peak Height Velocity typically reached (~8.3 cm/yr).", "Breast development (Tanner stages 2-4) and pubic hair onset.", "Menarche (first menstruation) average onset around 12.4 years.", "Underarm hair development and increased body odor.", "Circadian rhythm begins its adolescent shift toward later sleep times."],
+                        red: ["Extreme body weight obsession or early signs of disordered eating.", "No signs of pubertal onset by age 12 (requires evaluation).", "Persistent physical aggression or self-harm marks."]
+                    },
+                    mind: {
+                        green: ["Concrete thinking transitioning to abstract.", "Focuses primarily on the present; struggles with long-term planning.", "Egocentrism peaks; 'imaginary audience' phenomenon makes them feel constantly observed.", "Abstract thinking begins to improve."],
+                        red: ["Inability to focus on any task for more than a few minutes.", "Severe regression in academic performance.", "Complete detachment from reality or persistent delusional thinking."]
+                    },
+                    emotion: {
+                        green: ["Highly sensitive to stress and peer feedback.", "Operates heavily under 'hot cognition' (emotional impulses easily override logical reasoning).", "Mood swings are common and can shift rapidly within a single day."],
+                        red: ["Uncontrolled physical aggression toward others.", "Frequent, prolonged emotional meltdowns (lasting hours) beyond what is age-appropriate.", "Persistent flat affect or emotional numbness."]
+                    },
+                    friend: {
+                        green: ["Heavy focus on peer validation emerges.", "Formation of strong, same-sex friendships.", "Obsession with fitting in and social media status begins.", "Friend group becomes primary support source."],
+                        red: ["Persistent social withdrawal; complete avoidance of all peer interaction.", "Being targeted by severe cyberbullying.", "Only interacting with much older individuals online."]
+                    },
+                    parent: {
+                        green: ["Increased demand for physical privacy (e.g., closed bedroom doors).", "Periods of being sullen, aloof, or easily annoyed by parents.", "Parental advice is often temporarily rejected in favor of peer advice."],
+                        red: ["Extreme hostility or violence toward family members.", "Complete refusal to communicate with any family member.", "Running away from home."]
+                    },
+                    romance: {
+                        green: ["Crushes from afar.", "Mixed-sex group socializing.", "Minimal formal or individual dating.", "Early exploration of sexual identity."],
+                        red: ["Sexualized behavior inappropriate for age.", "Relationship with a significantly older person.", "Being coerced into sharing intimate images."]
+                    },
+                    exp: {
+                        green: ["Pushing back against previously accepted household rules.", "Curiosity about rule-breaking to test boundaries.", "Experimenting with new clothing styles, music, or subcultures."],
+                        red: ["Fire-setting or cruelty to animals.", "Involvement in cyberbullying others.", "Sharing or distributing explicit content online."]
+                    },
+                    chores: {
+                        green: ["Capable of maintaining personal hygiene independently.", "Can clean their own room and change bedsheets.", "Organizing school materials and packing their own lunch."],
+                        red: ["Complete refusal to participate in any household responsibilities.", "Inability to maintain basic personal hygiene (showering, brushing teeth) for days.", "Intentional destruction of property when asked to help."]
+                    }
                 },
-                "12": {
-                    phys: ["Peak Height Velocity typically reached (8.3cm/yr)", "Menarche (first menstruation) average onset", "Underarm hair development"],
-                    mind: ["Abstract thinking improves", "Understands long-term effects conceptually but rarely applies them"],
-                    friend: ["High sensitivity to social media status", "Friend group becomes primary support source"],
-                    parent: ["Increased need for physical privacy (closed doors)", "Parental advice often rejected for peer advice"],
-                    romance: ["Increased curiosity about dating", "Early exploration of sexual identity"],
-                    emotion: ["Operates under 'hot cognition' (impulse over logic)", "Highly sensitive to peer feedback"],
-                    exp: ["Curiosity about rule-breaking", "Cyberbullying awareness becomes critical"],
-                    chores: [],
-                    red_phys: ["Extreme dieting or purging behaviors", "Self-harm marks on body"],
-                    red_mind: ["Sudden dramatic drop in grades", "Inability to process simple instructions"],
-                    red_friend: ["Being targeted by cyberbullying", "Only interacting with much older individuals online"],
-                    red_parent: ["Complete refusal to communicate with any family member"],
-                    red_romance: ["Sexualized behavior inappropriate for age"],
-                    red_emotion: ["Persistent rage outbursts", "Emotional numbness or flat affect"],
-                    red_exp: ["Involvement in cyberbullying others", "Sharing explicit content online"],
-                    red_chores: []
+                "13-14": {
+                    phys: {
+                        green: ["Growth velocity begins to slow as puberty matures.", "Establishment of regular ovulatory cycles.", "Near final adult height; adult-level fine motor precision.", "Circadian shift pushes natural sleep time later (11 PM+)."],
+                        red: ["Extreme dieting, restrictive eating, or binge/purge cycles.", "Chronic sleep deprivation (sleeping less than 6 hours regularly).", "Using physical pain to cope with emotional distress."]
+                    },
+                    mind: {
+                        green: ["Abstract thinking and moral reasoning sharpen significantly.", "Ability to debate complex viewpoints and spot hypocrisy in adults.", "Peak dopamine reward sensitivity makes thrill-seeking highly appealing."],
+                        red: ["Complete disengagement from school planning.", "Inability to grasp the long-term consequences of dangerous actions.", "Obsessive screen/gaming fixation that replaces all offline learning."]
+                    },
+                    emotion: {
+                        green: ["Autonomy vs. connection internal struggle intensifies.", "Emotional impulse still frequently overrides logic, but occasional 'brakes' appear.", "High sensitivity to perceived injustice."],
+                        red: ["Expressions of hopelessness, worthlessness, or suicidal ideation.", "Using substances (alcohol/marijuana) specifically to numb anxiety or sadness.", "Panic attacks related to social or academic pressure."]
+                    },
+                    friend: {
+                        green: ["Friendships deepen in loyalty and emotional intimacy.", "Understanding of others' perspectives grows.", "Peer pressure susceptibility reaches its absolute peak."],
+                        red: ["Involvement with dangerous, antisocial, or significantly older peer groups.", "Being a perpetrator of persistent bullying or intimidation.", "Complete social isolation; no friends at all."]
+                    },
+                    parent: {
+                        green: ["Conflict with parents over behavioral autonomy (curfews, screen time) often peaks.", "Questioning of family social norms, politics, and religious authority.", "Occasional appreciation of parents when feeling vulnerable."],
+                        red: ["Constant, daily screaming matches that disrupt the entire household.", "Physical violence against parents or destruction of the home.", "Parents feeling afraid of their child's reactions."]
+                    },
+                    romance: {
+                        green: ["Genuine interest in structured dating and partnerships begins.", "Early relationships serve as a safe practice ground for empathy and communication.", "High sensitivity to public relationship status (e.g., social media official)."],
+                        red: ["Accepting controlling or abusive behavior from a partner.", "Isolating completely from friends to spend 100% of time with a partner.", "Inability to function or severe depression following a breakup."]
+                    },
+                    exp: {
+                        green: ["Experimentation with minor rebellion (breaking small rules).", "Highest susceptibility to peer presence when making risky decisions.", "Testing social boundaries around alcohol and parties."],
+                        red: ["Regular substance use (not just experimentation).", "Reckless driving or dangerous physical stunts for social media.", "Engaging in criminal activity."]
+                    },
+                    chores: {
+                        green: ["Handling own laundry entirely.", "Cooking simple meals independently.", "Assisting with grocery shopping and meal planning."],
+                        red: ["Complete inability to manage any self-care tasks.", "Weaponized incompetence to avoid responsibilities.", "Hoarding or unsanitary living conditions in their personal space."]
+                    }
                 },
-                "13": {
-                    phys: ["Growth velocity begins to slow", "Establishment of regular ovulatory cycles", "Adult-level fine motor precision"],
-                    mind: ["Peak dopamine reward sensitivity makes thrill-seeking common", "Identity exploration deepens"],
-                    friend: ["Friendships deepen in commitment and intimacy", "Peer pressure reaches its absolute peak"],
-                    parent: ["Conflict increases as teen demands behavioral autonomy", "Questions family social norms and authority"],
-                    romance: ["Genuine interest in dating partnerships begins", "Early relationships serve as practice for empathy"],
-                    emotion: ["Autonomy vs. connection struggle", "High sensitivity to stress"],
-                    exp: [],
-                    chores: ["Handling own laundry entirely", "Cooking simple meals independently"],
-                    red_phys: ["Signs of substance use affecting physical health", "Dramatic unexplained weight changes"],
-                    red_mind: ["Obsessive or delusional thinking patterns"],
-                    red_friend: ["Involvement with dangerous/older peer groups", "Complete social isolation"],
-                    red_parent: ["Running away from home", "Extreme defiance of all authority"],
-                    red_romance: ["Relationship with a significantly older person"],
-                    red_emotion: ["Self-harm behaviors", "Expressions of worthlessness"],
-                    red_exp: ["Substance experimentation", "Engaging in dangerous dares"],
-                    red_chores: []
+                "15-16": {
+                    phys: {
+                        green: ["Final brain pruning phase begins, improving neural efficiency.", "Physical changes of puberty are largely complete.", "Full skeletal maturity is reached or closely approaching."],
+                        red: ["Using performance-enhancing substances or extreme supplements.", "Ignoring physical health issues or refusing to see a doctor.", "Lethargy that prevents participation in daily life."]
+                    },
+                    mind: {
+                        green: ["More defined sense of personal identity and self-esteem.", "Considers future career possibilities and post-secondary paths.", "Cognitive capacity matches adults, though emotional impulse control still lags."],
+                        red: ["Chronic apathy or loss of interest in all activities.", "Inability to plan even one week ahead.", "Delusional or disordered thinking patterns."]
+                    },
+                    emotion: {
+                        green: ["Improved integration of thought and emotion.", "Able to put the 'brakes' on emotional intensity more effectively.", "Less daily volatility; moods become more stable over weeks."],
+                        red: ["Volatile aggression that is worse than early teen years.", "Persistent depressive episodes lasting weeks.", "Self-medication with substances to manage emotions."]
+                    },
+                    friend: {
+                        green: ["Friendships are based more on shared values than just physical proximity.", "Nuanced and meaningful peer support network is established.", "Intimate self-disclosure in friendships serves as a template for adulthood."],
+                        red: ["Complete withdrawal from all friendships.", "Extreme codependency on a single person.", "Only maintaining relationships online; zero in-person social life."]
+                    },
+                    parent: {
+                        green: ["Conflict begins to gradually decrease as mutual respect grows.", "Complex understanding of parents as flawed people.", "Negotiating curfews, car usage, and privileges more reasonably."],
+                        red: ["Total communication shutdown with all adults.", "Complete estrangement from family by choice.", "Emotional regulation around parents is worse than age 13."]
+                    },
+                    romance: {
+                        green: ["Navigating complex emotional partnerships.", "Understanding of physical boundaries solidifies.", "More stable romantic interests; less relationship 'drama'."],
+                        red: ["Staying in a clearly abusive relationship.", "Abusive relationship patterns (giving or receiving).", "Using relationships to fill a void of self-worth entirely."]
+                    },
+                    exp: {
+                        green: ["Calculated risk-taking with more awareness of potential consequences.", "Navigating legal boundaries (driving, part-time work).", "Digital literacy improves; better judgment about online sharing."],
+                        red: ["Escalating substance use.", "DUI or reckless driving incidents.", "Legal trouble from risk-taking behavior."]
+                    },
+                    chores: {
+                        green: ["Managing a part-time job or intense extracurricular schedule alongside chores.", "Cooking one full, healthy family meal per week.", "Managing personal banking, debit cards, and basic savings goals."],
+                        red: ["Complete inability to balance any responsibilities.", "Financial recklessness (blowing entire paychecks immediately).", "Refusing to contribute to a household they live in."]
+                    }
                 },
-                "14": {
-                    phys: ["Near final adult height", "Circadian shift pushes natural sleep time later (11 PM+)"],
-                    mind: ["Abstract thinking and moral reasoning sharpen", "Can debate complex viewpoints"],
-                    friend: ["Complex peer networks form", "Understanding of others' perspectives grows"],
-                    parent: ["Conflict with authority figures peaks", "Pushing for emotional autonomy"],
-                    romance: [],
-                    emotion: [],
-                    exp: ["Experimentation with minor rebellion", "Highest susceptibility to peer presence for risk"],
-                    chores: [],
-                    red_phys: ["Chronic sleep deprivation (under 5 hrs/night)", "Signs of substance abuse"],
-                    red_mind: ["Inability to think about consequences at all", "Paranoid thinking"],
-                    red_friend: ["Only associating with antisocial peer groups", "Bullying or intimidating others"],
-                    red_parent: ["Threatening or assaulting family members", "Stealing from family"],
-                    red_romance: ["Controlling or abusive relationship dynamics"],
-                    red_emotion: ["Persistent emotional numbness", "Escalating anger management issues"],
-                    red_exp: ["Regular substance use", "Reckless driving or dangerous stunts"],
-                    red_chores: []
-                },
-                "15": {
-                    phys: ["Final brain pruning phase begins", "Physical changes of puberty are mostly complete"],
-                    mind: ["More defined sense of identity and self-esteem", "Considers future and career possibilities"],
-                    friend: ["Friendships based on shared values, not just proximity", "Nuanced and meaningful peer support"],
-                    parent: [],
-                    romance: [],
-                    emotion: ["Improved integration of thought and emotion", "Able to put 'brakes' on emotional intensity"],
-                    exp: [],
-                    chores: ["Managing part-time work balance with chores", "Cooking 1 full healthy meal/week"],
-                    red_phys: ["Excessive daytime sleepiness", "Eating disorder behaviors"],
-                    red_mind: ["Chronic apathy/loss of interest", "Inability to plan even one week ahead"],
-                    red_friend: ["Complete withdrawal from all friendships", "Only online relationships"],
-                    red_parent: ["Total communication shutdown with all adults"],
-                    red_romance: ["Staying in clearly abusive relationship"],
-                    red_emotion: ["Volatile aggression", "Persistent depressive episodes"],
-                    red_exp: ["Escalating substance use", "Legal trouble from risk-taking"],
-                    red_chores: []
-                },
-                "16": {
-                    phys: ["Full skeletal maturity reached", "Neurological myelination improves transmission speed"],
-                    mind: ["Improved impulse control emerges", "Cognitive capacity matches adults in calm settings"],
-                    friend: ["Intimate self-disclosure in friendships", "Friendships serve as templates for adulthood"],
-                    parent: ["Arguments shift from rules to future-planning", "Negotiating curfews and car usage"],
-                    romance: ["Navigating complex emotional partnerships", "Understanding of physical boundaries solidifies"],
-                    emotion: [],
-                    exp: [],
-                    chores: [],
-                    red_phys: ["Substance dependency signs", "Chronic fatigue or unexplained pain"],
-                    red_mind: ["Complete disinterest in future planning", "Delusional or disordered thinking"],
-                    red_friend: ["Extreme codependency on one person", "Total social isolation"],
-                    red_parent: ["Complete estrangement from family by choice"],
-                    red_romance: ["Abusive relationship patterns (giving or receiving)"],
-                    red_emotion: ["Emotional regulation worse than early teens", "Self-medication with substances"],
-                    red_exp: ["DUI or reckless driving incidents", "Criminal activity"],
-                    red_chores: []
-                },
-                "17": {
-                    phys: ["Final height reached", "Prefrontal cortex thickening continues"],
-                    mind: [],
-                    friend: ["Quality over quantity in peer groups", "Highly stable and supportive friendships"],
-                    parent: ["Adult-to-adult dynamic begins", "Parents viewed as mentors/resources rather than wardens"],
-                    romance: ["Capacity for long-term commitment solidifies", "Navigating intense breakups"],
-                    emotion: ["Capable of handling significant compounding stress", "Less mood volatility than early teens"],
-                    exp: ["Calculated career/education risks", "Navigating digital legal terms"],
-                    chores: ["Household financial planning basics", "Health insurance basics"],
-                    red_phys: ["Substance dependency", "Significant unexplained weight changes"],
-                    red_mind: ["Inability to plan 3 months ahead", "Complete academic disengagement"],
-                    red_friend: ["Complete social isolation", "Only associating with harmful peer groups"],
-                    red_parent: ["Total refusal of any family connection"],
-                    red_romance: ["Obsessive or stalking behaviors", "Inability to cope with breakups"],
-                    red_emotion: ["Expressions of hopelessness", "Self-harm or suicidal ideation"],
-                    red_exp: ["Repeated legal issues", "Dangerous substance use patterns"],
-                    red_chores: []
-                },
-                "18": {
-                    phys: ["Peak adult physical stamina", "Circadian rhythm begins to normalize"],
-                    mind: ["Legal autonomy achieved", "Consolidation of personal ethical frameworks"],
-                    friend: ["Managing friendships while balancing extreme life changes (college/work)", "Lifelong bonds cemented"],
-                    parent: ["Full separation of behavioral dependence", "Negotiating living-at-home boundaries if applicable"],
-                    romance: ["Maintenance of long-term romantic partnerships", "Navigating shared living or long-distance"],
-                    emotion: ["Nearing adult emotional maturity", "Managing adult-level stress"],
-                    exp: ["Legal consequences apply to risk-taking", "Civic digital participation"],
-                    chores: ["Lease and tax basics", "Fully managing a personal schedule", "Independent healthcare records"],
-                    red_phys: ["Heavy escapism affecting physical health", "Substance addiction"],
-                    red_mind: ["Complete inability to make decisions", "Failure to launch beginnings"],
-                    red_friend: ["Zero social connections", "Only toxic or enabling relationships"],
-                    red_parent: ["Parasitic dependence without any growth trajectory"],
-                    red_romance: ["Pattern of abusive relationships", "Inability to form any romantic connection"],
-                    red_emotion: ["Any expression of self-harm", "Chronic emotional dysregulation"],
-                    red_exp: ["Heavy escapism (excessive gaming/drinking)", "Criminal involvement"],
-                    red_chores: ["Complete inability to manage basic self-care"]
+                "17-18": {
+                    phys: {
+                        green: ["Peak adolescent physical stamina.", "Circadian rhythm begins to slowly normalize closer to adult patterns.", "Prefrontal cortex thickening continues to improve impulse control."],
+                        red: ["Substance addiction affecting physical health.", "Complete neglect of physical health (diet, exercise, sleep).", "Chronic fatigue or unexplained pain without medical cause."]
+                    },
+                    mind: {
+                        green: ["Legal autonomy achieved (voting, signing contracts).", "Consolidation of personal ethical and political frameworks.", "Capable of long-term strategic planning (college apps, moving out)."],
+                        red: ["Complete inability to make decisions.", "'Failure to launch' — unable to take steps toward independence.", "Extreme rigid thinking; inability to consider alternative viewpoints."]
+                    },
+                    emotion: {
+                        green: ["Nearing adult emotional maturity.", "Capable of handling significant, compounding stress (exams + work + social).", "Ability to self-soothe effectively without acting out."],
+                        red: ["Any expression of self-harm or suicidal ideation.", "Chronic emotional dysregulation worse than early adolescence.", "Heavy escapism (excessive gaming/drinking) as sole coping mechanism."]
+                    },
+                    friend: {
+                        green: ["Quality over quantity becomes the focus for peer groups.", "Managing friendships while balancing extreme life changes (moving, college).", "Lifelong bonds are cemented."],
+                        red: ["Isolating from old friends due to an abusive romantic relationship.", "Continuing to engage in high-school level relational bullying.", "Inability to relate to peers who are moving forward in life."]
+                    },
+                    parent: {
+                        green: ["Adult-to-adult dynamic begins to form.", "Parents are viewed as resources and mentors rather than wardens.", "Full separation of behavioral dependence; negotiating living-at-home boundaries if staying."],
+                        red: ["Parasitic dependence without any growth trajectory.", "Total refusal of any family connection.", "Hostile cohabitation with zero communication."]
+                    },
+                    romance: {
+                        green: ["Capacity for long-term commitment solidifies.", "Navigating shared living discussions or long-distance relationship maturity.", "Ability to end relationships healthily and respectfully."],
+                        red: ["Pattern of abusive relationships (giving or receiving).", "Obsessive or stalking behaviors after breakups.", "Inability to form any romantic connection due to fear of intimacy."]
+                    },
+                    exp: {
+                        green: ["Calculated career/education risks with awareness of legal consequences.", "Civic digital participation and political engagement.", "Understanding that actions now carry adult legal weight."],
+                        red: ["Criminal risk involvement.", "Hard drug experimentation.", "Gambling or accruing significant debt quickly."]
+                    },
+                    chores: {
+                        green: ["Fully managing a personal schedule and appointments.", "Understanding lease agreements, taxes, and independent healthcare records.", "Capable of full independent living (cleaning, cooking, budgeting)."],
+                        red: ["Complete inability to manage basic self-care.", "Failure to hold any job or educational commitment.", "Expecting parents to manage their daily schedule entirely."]
+                    }
                 },
                 "19-25": {
-                    phys: ["Prefrontal cortex reaches final structural maturity (around 25)", "Peak bone mass achieved"],
-                    mind: ["High capacity for dialectical thinking", "Cementing personal philosophies and civic identity"],
-                    friend: ["Focus shifts to quality over quantity", "Curation of social circles based on goals"],
-                    parent: ["Negotiating adult-to-adult relationship", "Financial separation"],
-                    romance: [],
-                    emotion: ["Full emotional regulation capacity", "Managing compounding adult stresses (bills, career)"],
-                    exp: ["Career exploration and job-switching", "Financial and geographical instability is normative"],
-                    chores: ["Managing leases, taxes, and adult healthcare systems", "Civic participation (voting, community)"],
-                    red_phys: ["Chronic health neglect", "Substance addiction"],
-                    red_mind: ["Complete lack of motivation for work/education", "'Failure to Launch' (action-blocking anxiety)"],
-                    red_friend: ["Persistent social isolation to a childhood bedroom", "No meaningful social connections"],
-                    red_parent: ["Total financial/emotional dependence with no plan for change"],
-                    red_romance: ["Pattern of abusive or exploitative relationships"],
-                    red_emotion: ["Persistent depression or anxiety preventing daily function", "Suicidal ideation"],
-                    red_exp: ["Chronic inability to hold employment", "Severe financial irresponsibility"],
-                    red_chores: ["Cannot manage any adult responsibilities (bills, hygiene, food)"]
+                    phys: {
+                        green: ["Prefrontal cortex reaches final structural maturity (around age 25).", "Peak adult bone mass and muscle strength achieved.", "Establishing lifelong dietary and fitness habits."],
+                        red: ["Physical deterioration due to lifestyle choices (addiction, poor diet).", "Untreated chronic health conditions.", "Chronic sleep reversal (awake all night, sleep all day)."]
+                    },
+                    mind: {
+                        green: ["High capacity for dialectical thinking (holding two opposing views and synthesizing them).", "Cementing personal philosophies and civic identity.", "Navigating complex workplace politics and higher education demands."],
+                        red: ["Cognitive stagnation; refusal to learn new skills.", "Inability to process constructive criticism in the workplace.", "Chronic indecision that prevents any life progress."]
+                    },
+                    emotion: {
+                        green: ["Full emotional regulation capacity.", "Managing compounding adult stresses (bills, career, relationships).", "Ability to experience joy and satisfaction in independent achievements."],
+                        red: ["Persistent depression or anxiety preventing daily function.", "Suicidal ideation.", "Complete emotional dependence on a single person."]
+                    },
+                    friend: {
+                        green: ["Focus shifts to quality over quantity.", "Curation of social circles based on shared life goals.", "Professional networking becomes part of social life."],
+                        red: ["Persistent social isolation (retreating to childhood bedroom).", "No meaningful social connections whatsoever.", "Only maintaining toxic or enabling relationships."]
+                    },
+                    parent: {
+                        green: ["Negotiating a fully adult-to-adult relationship.", "Financial separation or a clearly defined support agreement.", "Mutual respect and healthy boundaries."],
+                        red: ["Financial dependency beyond what is developmentally or economically appropriate.", "Allowing parents to dictate career or relationship choices.", "Using the parental home to hide from the world rather than as a launchpad."]
+                    },
+                    romance: {
+                        green: ["Navigating long-term partnerships or marriage considerations.", "Ability to maintain individual identity within a partnership.", "Healthy conflict resolution within relationships."],
+                        red: ["History of highly unstable, volatile, or violent relationships.", "Fear of intimacy preventing any close connections.", "Financial abuse within a romantic partnership."]
+                    },
+                    exp: {
+                        green: ["Career exploration and job-switching is normative.", "Financial instability is common but actively managed.", "Investing in future goals (education, savings, travel)."],
+                        red: ["Chronic inability to hold employment.", "'Failure to Launch' syndrome (action-blocking anxiety).", "Severe financial irresponsibility (evictions, crippling debt)."]
+                    },
+                    chores: {
+                        green: ["Managing leases, mortgages, taxes, and adult healthcare systems independently.", "Maintaining a clean and functional living space.", "Civic participation and community contribution."],
+                        red: ["Complete lack of motivation for work or education.", "Inability to cook, clean, or manage basic hygiene when living alone.", "Evictions or severe debt due to negligence."]
+                    }
                 }
             },
             male: {
-                "11": {
-                    phys: [],
-                    mind: [],
-                    friend: ["Activity-based friendships are dominant", "Group hierarchy establishment"],
-                    parent: ["Aloofness towards family events", "Periods of being sullen"],
-                    romance: ["Group mixed-sex socializing", "Minimal individual dating interest"],
-                    emotion: ["Frustration often expressed physically rather than verbally"],
-                    exp: ["Exploring physical limits in play", "Password security fundamentals"],
-                    chores: [],
-                    red_phys: [],
-                    red_mind: ["Severe regression in school performance"],
-                    red_friend: ["Complete avoidance of peer interaction"],
-                    red_parent: ["Extreme hostility toward family members"],
-                    red_romance: [],
-                    red_emotion: ["Uncontrolled physical aggression", "Frequent destructive outbursts"],
-                    red_exp: ["Fire-setting or cruelty to animals", "Obsessive screen fixation (10+ hrs/day)"],
-                    red_chores: []
+                "11-12": {
+                    phys: {
+                        green: ["Testicular enlargement is the first sign of puberty (Tanner Stage 2).", "Early pubic hair onset and initial height acceleration.", "Voice deepening hints; clumsiness increases as limbs grow.", "Increased body odor and oily skin."],
+                        red: ["No signs of pubertal onset by age 13 (requires evaluation).", "Extreme risk-taking with physical safety (jumping from heights, etc.).", "Self-harm marks."]
+                    },
+                    mind: {
+                        green: ["Concrete thinking with early abstract concepts forming.", "Focuses on the present; imaginary audience syndrome.", "Attention span is variable; intense focus on interests, low for schoolwork."],
+                        red: ["Severe regression in school performance.", "Complete detachment from reality.", "Obsessive screen fixation (10+ hrs/day) replacing all other activity."]
+                    },
+                    emotion: {
+                        green: ["Hot cognition: impulses frequently override logical thought.", "Vulnerability is often masked by teasing or bravado.", "Frustration is frequently expressed physically rather than verbally."],
+                        red: ["Uncontrolled physical aggression toward people or animals.", "Frequent destructive outbursts (breaking things, punching walls).", "Persistent emotional numbness or flat affect."]
+                    },
+                    friend: {
+                        green: ["Activity-based friendships are dominant (gaming, sports).", "Group hierarchy and 'pecking order' establishment.", "Friend group begins to replace parents as primary support source."],
+                        red: ["Complete avoidance of all peer interaction.", "Being targeted by persistent, severe bullying.", "Only interacting with much older individuals online."]
+                    },
+                    parent: {
+                        green: ["Aloofness towards family events; periods of being sullen.", "Increased need for physical privacy (closed doors, bathroom privacy).", "Parental advice is often rejected."],
+                        red: ["Extreme hostility or violence toward family members.", "Complete communication shutdown with family.", "Running away from home."]
+                    },
+                    romance: {
+                        green: ["First crushes from afar.", "Curiosity about physical intimacy and bodies.", "Group mixed-sex socializing rather than individual dating."],
+                        red: ["Viewing or sharing explicit adult pornography.", "Inappropriate physical boundary-crossing with peers.", "Extreme anxiety regarding gender norms."]
+                    },
+                    exp: {
+                        green: ["Exploring physical limits in play (skateboarding, climbing).", "Curiosity about rule-breaking and swearing.", "Learning password security and digital footprint basics."],
+                        red: ["Fire-setting or cruelty to animals.", "Accessing dangerous or extremist content online.", "Bullying or intimidating younger children."]
+                    },
+                    chores: {
+                        green: ["Capable of maintaining personal hygiene independently.", "Can clean their own room and manage school supplies.", "Helping with yard work and basic household tasks."],
+                        red: ["Complete refusal to participate in any household responsibilities.", "Inability to maintain basic personal hygiene for days.", "Intentional destruction of property."]
+                    }
                 },
-                "12": {
-                    phys: ["Pubic hair onset", "Voice deepening hints", "Clumsiness increases"],
-                    mind: ["Abstract thinking concepts start to form", "Imaginary audience syndrome"],
-                    friend: ["Vulnerability often masked by teasing", "Friend group becomes primary support source"],
-                    parent: ["Increased need for physical privacy", "Parental advice often rejected for peer advice"],
-                    romance: ["First crushes from afar", "Curiosity about physical intimacy"],
-                    emotion: ["Hot cognition (impulse over logic)", "Highly sensitive to peer feedback regarding status"],
-                    exp: ["Exploring physical limits", "Curiosity about rule-breaking"],
-                    chores: [],
-                    red_phys: ["Self-harm marks", "Extreme risk-taking with physical safety"],
-                    red_mind: ["Sudden dramatic academic decline", "Inability to process instructions"],
-                    red_friend: ["Being targeted by persistent bullying", "Only interacting with much older individuals"],
-                    red_parent: ["Complete communication shutdown with family"],
-                    red_romance: ["Sexualized behavior inappropriate for age"],
-                    red_emotion: ["Persistent rage episodes", "Emotional numbness"],
-                    red_exp: ["Bullying or intimidating peers", "Accessing dangerous content online"],
-                    red_chores: []
+                "13-14": {
+                    phys: {
+                        green: ["Onset of major growth spurt (approaching 10cm/yr).", "Voice cracking, early facial hair, and skin breakouts.", "Nocturnal emissions ('wet dreams') and rapid muscle mass increase."],
+                        red: ["Signs of steroid or substance use.", "Chronic sleep deprivation (under 5 hours/night).", "Ignoring serious injuries."]
+                    },
+                    mind: {
+                        green: ["High dopamine sensitivity leads to intense thrill-seeking.", "Understanding of others' perspectives grows.", "Argumentative logic sharpens; will debate rules extensively."],
+                        red: ["Complete academic apathy.", "Inability to grasp cause and effect.", "Escapism through 10+ hours of daily gaming."]
+                    },
+                    emotion: {
+                        green: ["Masking insecurities with bravado is common.", "Emotional impulse still leads logic in most situations.", "Beginning to develop a personal sense of justice and fairness."],
+                        red: ["Escalating anger management issues.", "Emotional numbness masked by aggression.", "Self-harm behaviors or expressions of worthlessness."]
+                    },
+                    friend: {
+                        green: ["Complex peer networks form.", "Friendships deepen in loyalty and shared secrets.", "Peer pressure susceptibility is highest here."],
+                        red: ["Only associating with antisocial or delinquent peer groups.", "Intimidating or bullying others regularly.", "Complete social withdrawal."]
+                    },
+                    parent: {
+                        green: ["Argumentative push for behavioral autonomy.", "High conflict over family rules and curfews.", "Conflict with male authority figures often peaks."],
+                        red: ["Threatening or assaulting family members.", "Stealing from family.", "Complete defiance of all authority with zero compromise."]
+                    },
+                    romance: {
+                        green: ["Awkward flirtation stages.", "Interest in defined dating.", "Managing FOMO (Fear Of Missing Out) regarding social events."],
+                        red: ["Pressuring peers for sexual photos.", "Aggressive or stalking behaviors toward crushes.", "Extreme depression over romantic rejections."]
+                    },
+                    exp: {
+                        green: ["Highest susceptibility to peer presence for risk.", "Experimentation with minor rebellion.", "Testing physical limits in sports and activities."],
+                        red: ["Regular substance use.", "Reckless physical stunts for social media.", "Vandalism or property destruction."]
+                    },
+                    chores: {
+                        green: ["Completing own laundry.", "Managing own morning alarms.", "Assisting with sibling/pet care and yard work."],
+                        red: ["Complete inability to manage any self-care tasks.", "Weaponized incompetence to avoid responsibilities.", "Hoarding or unsanitary personal space."]
+                    }
                 },
-                "13": {
-                    phys: ["Onset of major growth spurt (10cm/yr)", "Voice cracking", "Facial oil & skin breakouts"],
-                    mind: [],
-                    friend: ["Peer pressure begins to peak", "Friendships deepen in loyalty"],
-                    parent: ["Argumentative push for behavioral autonomy", "High conflict over family rules"],
-                    romance: ["Awkward flirtation stages", "Genuine interest in dating begins"],
-                    emotion: [],
-                    exp: [],
-                    chores: ["Complete own laundry", "Managing own morning alarms", "Assisting with sibling/pet care"],
-                    red_phys: ["Signs of substance use", "Dramatic unexplained weight changes"],
-                    red_mind: ["Obsessive thinking patterns"],
-                    red_friend: ["Involvement with dangerous/older peer groups", "Complete social withdrawal"],
-                    red_parent: ["Extreme defiance of all authority", "Running away from home"],
-                    red_romance: ["Relationship with significantly older person"],
-                    red_emotion: ["Self-harm behaviors", "Expressions of worthlessness"],
-                    red_exp: ["Substance experimentation", "Vandalism or property destruction"],
-                    red_chores: []
+                "15-16": {
+                    phys: {
+                        green: ["Facial and underarm hair thickens; acne may peak.", "Nearing final adult height.", "Muscle mass and strength spurt continues."],
+                        red: ["Ignoring serious injuries to keep playing sports.", "Extreme restriction of food to 'cut' weight.", "Lethargy that prevents participation in daily life."]
+                    },
+                    mind: {
+                        green: ["More defined sense of identity.", "Considers career possibilities and vocational training.", "Improved integration of thought and emotion."],
+                        red: ["Loss of interest in previously loved sports or hobbies.", "Chronic truancy.", "Inability to set any short-term goals."]
+                    },
+                    emotion: {
+                        green: ["Formation of personal 'honor codes'.", "Improved impulse control; less volatile outbursts.", "Learning to process failure more adaptively."],
+                        red: ["Persistent depressive episodes.", "Volatile aggression worse than early teens.", "Self-medication with substances."]
+                    },
+                    friend: {
+                        green: ["Friendships based on shared values, not just convenience.", "Intimate self-disclosure in friendships begins.", "Friendships serve as templates for adulthood."],
+                        red: ["Total social isolation.", "Extreme codependency on one person.", "Only socializing in anonymous online spaces."]
+                    },
+                    parent: {
+                        green: ["Conflict begins to gradually decrease.", "Complex understanding of parents as people.", "Negotiating vehicle privileges and curfews reasonably."],
+                        red: ["Total communication shutdown with all adults.", "Complete estrangement from family.", "Threatening parents to get what they want."]
+                    },
+                    romance: {
+                        green: ["More stable romantic interests.", "Navigating complex emotional partnerships.", "Physical boundary understanding solidifies."],
+                        red: ["Abusive relationship patterns (giving or receiving).", "Staying in a clearly harmful relationship.", "Using relationships solely for status."]
+                    },
+                    exp: {
+                        green: ["Calculated risk-taking with growing consequence awareness.", "Navigating driving responsibilities.", "Digital literacy and online safety improves."],
+                        red: ["Escalating substance use.", "DUI or reckless driving incidents.", "Criminal activity."]
+                    },
+                    chores: {
+                        green: ["Managing a part-time job alongside household tasks.", "Basic cooking and kitchen maintenance.", "Managing personal finances (debit card, savings)."],
+                        red: ["Complete inability to balance responsibilities.", "Financial recklessness.", "Refusing to contribute to the household."]
+                    }
                 },
-                "14": {
-                    phys: ["Peak Height Velocity (avg 13.5 - 14 yrs)", "Nocturnal emissions ('wet dreams')", "Muscle mass increases rapidly"],
-                    mind: [],
-                    friend: ["Complex peer networks", "Understanding of others' perspectives grows"],
-                    parent: ["Conflict with male authority figures peaks", "Push for independence"],
-                    romance: ["Interest in defined dating", "Managing FOMO habits"],
-                    emotion: ["Masking insecurities with bravado", "Emotional impulse still leads logic"],
-                    exp: ["Highest susceptibility to peer presence for risk", "Experimentation with minor rebellion"],
-                    chores: [],
-                    red_phys: ["Chronic sleep deprivation (under 5 hrs)", "Signs of steroid or substance use"],
-                    red_mind: ["Complete disengagement from learning", "Paranoid thinking"],
-                    red_friend: ["Only associating with antisocial groups", "Intimidating or bullying others"],
-                    red_parent: ["Threatening or assaulting family", "Stealing from family"],
-                    red_romance: ["Controlling or aggressive relationship behavior"],
-                    red_emotion: ["Escalating anger management issues", "Emotional numbness masked by aggression"],
-                    red_exp: ["Regular substance use", "Reckless physical stunts for social media"],
-                    red_chores: []
-                },
-                "15": {
-                    phys: [],
-                    mind: ["More defined sense of identity", "Considers career possibilities"],
-                    friend: ["Friendships based on shared values", "Meaningful peer support"],
-                    parent: ["Conflict begins to gradually decrease", "Complex understanding of parents"],
-                    romance: ["More stable romantic interests"],
-                    emotion: ["Formation of personal 'honor codes'", "Improved integration of thought and emotion"],
-                    exp: [],
-                    chores: [],
-                    red_phys: ["Chronic sleep deprivation", "Overtraining or body dysmorphia signs"],
-                    red_mind: ["Chronic apathy", "Loss of interest in previously loved sports"],
-                    red_friend: ["Complete withdrawal from all friendships"],
-                    red_parent: ["Total communication shutdown with all adults"],
-                    red_romance: ["Staying in abusive relationship"],
-                    red_emotion: ["Persistent depressive episodes", "Volatile aggression"],
-                    red_exp: ["Escalating substance use", "Legal trouble from risk-taking"],
-                    red_chores: []
-                },
-                "16": {
-                    phys: ["Nearing final adult height", "Muscle mass and strength spurt continues"],
-                    mind: [],
-                    friend: ["Intimate self-disclosure in friendships", "Friendships serve as templates for adulthood"],
-                    parent: ["Arguments shift from rules to future-planning", "Negotiating vehicle privileges"],
-                    romance: ["Navigating complex emotional partnerships", "Physical boundary understanding solidifies"],
-                    emotion: ["Improved impulse control", "Less volatile outbursts"],
-                    exp: [],
-                    chores: [],
-                    red_phys: ["Substance dependency signs", "Steroid abuse indicators"],
-                    red_mind: ["Complete disinterest in any future planning"],
-                    red_friend: ["Total social isolation", "Extreme codependency on one person"],
-                    red_parent: ["Complete estrangement from family"],
-                    red_romance: ["Abusive relationship patterns"],
-                    red_emotion: ["Emotional regulation worse than early teens", "Self-medication with substances"],
-                    red_exp: ["DUI or reckless driving incidents", "Criminal activity"],
-                    red_chores: []
-                },
-                "17": {
-                    phys: ["Final height reached or nearing completion", "Facial hair stabilizes"],
-                    mind: [],
-                    friend: ["Quality over quantity in peer groups"],
-                    parent: ["Adult-to-adult dynamic begins", "Listening to family advice again"],
-                    romance: ["Capacity for commitment solidifies"],
-                    emotion: ["Capable of handling significant stress", "Less mood volatility"],
-                    exp: [],
-                    chores: [],
-                    red_phys: ["Substance dependency", "Neglecting physical health entirely"],
-                    red_mind: ["Inability to plan ahead", "Lack of future motivation"],
-                    red_friend: ["Isolation from friends/family", "Only harmful peer associations"],
-                    red_parent: ["Total refusal of any family connection"],
-                    red_romance: ["Obsessive or stalking behaviors"],
-                    red_emotion: ["Expressions of hopelessness", "Self-harm or suicidal ideation"],
-                    red_exp: ["Repeated legal issues", "Dangerous substance use patterns"],
-                    red_chores: []
-                },
-                "18": {
-                    phys: ["Full skeletal and muscular maturity", "Circadian rhythm normalizes", "Peak adult strength"],
-                    mind: ["Legal autonomy achieved", "Consolidation of ethical frameworks", "Consequence-focused logic"],
-                    friend: ["Managing friendships through life changes", "Lifelong bonds cemented"],
-                    parent: ["Full separation of behavioral dependence", "Negotiating living-at-home boundaries"],
-                    romance: ["Maintenance of long-term partnerships", "Navigating shared living"],
-                    emotion: ["Nearing adult emotional maturity"],
-                    exp: ["Calculated career/education risks", "Legal consequences apply to actions"],
-                    chores: ["Independent living management", "Adult healthcare transitions"],
-                    red_phys: ["Substance addiction", "Complete health neglect"],
-                    red_mind: ["Failure to launch beginnings", "Complete inability to make decisions"],
-                    red_friend: ["Zero social connections", "Only toxic or enabling relationships"],
-                    red_parent: ["Parasitic dependence with no growth trajectory"],
-                    red_romance: ["Pattern of abusive relationships"],
-                    red_emotion: ["Expression of hopelessness", "Chronic emotional dysregulation"],
-                    red_exp: ["Heavy escapism (gaming/drinking)", "Criminal risk involvement"],
-                    red_chores: ["Complete inability to manage basic self-care"]
+                "17-18": {
+                    phys: {
+                        green: ["Final height reached or nearing completion.", "Facial hair stabilizes.", "Full skeletal and muscular maturity approaching."],
+                        red: ["Substance dependency.", "Neglecting physical health entirely.", "Steroid abuse indicators."]
+                    },
+                    mind: {
+                        green: ["Core value definition.", "Consequence-focused logic.", "Legal autonomy achieved (voting, signing documents)."],
+                        red: ["Lack of future motivation or planning.", "Inability to understand contracts or financial basics.", "Extreme rigid thinking."]
+                    },
+                    emotion: {
+                        green: ["Capable of handling significant stress.", "Less mood volatility.", "Nearing adult emotional maturity."],
+                        red: ["Heavy escapism (gaming/drinking).", "Untreated depression or anxiety.", "Expressions of hopelessness."]
+                    },
+                    friend: {
+                        green: ["Quality over quantity in peer groups.", "Managing friendships through life changes (graduation).", "Lifelong bonds cemented."],
+                        red: ["Isolation from friends/family.", "Only socializing in online gaming lobbies.", "Inability to resolve peer conflicts without violence."]
+                    },
+                    parent: {
+                        green: ["Adult-to-adult dynamic begins.", "Listening to family advice again.", "Full separation of behavioral dependence."],
+                        red: ["Total refusal of any family connection.", "Parasitic dependence with no growth plan.", "Hostile cohabitation with zero communication."]
+                    },
+                    romance: {
+                        green: ["Capacity for commitment solidifies.", "Navigating shared living or long-distance.", "Understanding deep emotional intimacy."],
+                        red: ["Obsessive or stalking behaviors.", "Pattern of abusive relationships.", "Inability to cope with breakups in a healthy way."]
+                    },
+                    exp: {
+                        green: ["Calculated career/education risks.", "Legal consequences apply to actions (understanding this).", "Civic participation."],
+                        red: ["Criminal risk involvement.", "Hard drug experimentation.", "Gambling or accruing significant debt."]
+                    },
+                    chores: {
+                        green: ["Independent living management.", "Adult healthcare transitions (booking own doctors).", "Understanding credit and taxes."],
+                        red: ["Failure to launch.", "Inability to hold a job.", "Expecting parents to manage their daily schedule."]
+                    }
                 },
                 "19-25": {
-                    phys: ["Prefrontal cortex finishes structural maturity", "Peak adult strength achieved"],
-                    mind: ["High capacity for dialectical thinking", "Cementing personal philosophies"],
-                    friend: ["Active curation of social circles based on life goals", "Focus shifts to quality over quantity"],
-                    parent: ["Negotiating adult-to-adult relationship", "Financial separation"],
-                    romance: ["Navigating marriage or long-term partnerships"],
-                    emotion: ["Full emotional regulation capacity", "Managing compounding adult stresses"],
-                    exp: ["Career exploration and job-switching", "Financial instability is normative"],
-                    chores: ["Managing leases, taxes, adult healthcare", "Civic participation"],
-                    red_phys: ["Chronic health neglect", "Substance addiction"],
-                    red_mind: ["Complete lack of motivation for work", "Action-blocking anxiety"],
-                    red_friend: ["Persistent social isolation to childhood bedroom", "No meaningful connections"],
-                    red_parent: ["Total financial/emotional dependence with no plan"],
-                    red_romance: ["Pattern of exploitative relationships"],
-                    red_emotion: ["Persistent depression preventing daily function", "Suicidal ideation"],
-                    red_exp: ["Chronic inability to hold employment", "Failure to Launch syndrome"],
-                    red_chores: ["Cannot manage any adult responsibilities"]
+                    phys: {
+                        green: ["Prefrontal cortex finishes structural maturity (around 25).", "Peak adult strength achieved.", "Maintenance of personal fitness routines."],
+                        red: ["Physical deterioration due to lifestyle.", "Untreated addictions.", "Chronic sleep reversal (awake all night, sleep all day)."]
+                    },
+                    mind: {
+                        green: ["High capacity for dialectical thinking.", "Cementing personal philosophies.", "Navigating complex professional environments."],
+                        red: ["Cognitive stagnation; refusal to learn.", "Inability to handle constructive criticism.", "Chronic indecision preventing life progress."]
+                    },
+                    emotion: {
+                        green: ["Full emotional regulation capacity.", "Managing compounding adult stresses.", "Finding satisfaction in independent achievements."],
+                        red: ["Persistent depression preventing daily function.", "Suicidal ideation.", "Complete emotional dependence on a single person."]
+                    },
+                    friend: {
+                        green: ["Active curation of social circles based on life goals.", "Focus shifts to quality over quantity.", "Professional networking."],
+                        red: ["Persistent social isolation.", "No meaningful social connections.", "Only maintaining toxic or enabling relationships."]
+                    },
+                    parent: {
+                        green: ["Negotiating adult-to-adult relationship.", "Financial separation.", "Mutual respect and boundaries."],
+                        red: ["Extreme financial dependency.", "Living at home with zero contribution or plan to leave.", "Hostile cohabitation with parents."]
+                    },
+                    romance: {
+                        green: ["Navigating marriage or long-term partnerships.", "Maintaining individual identity within a partnership.", "Healthy conflict resolution."],
+                        red: ["History of volatile or violent relationships.", "Fear of intimacy preventing connections.", "Financial abuse within a partnership."]
+                    },
+                    exp: {
+                        green: ["Career exploration and job-switching.", "Financial instability is normative but managed.", "Investing in future goals."],
+                        red: ["Chronic inability to hold employment.", "'Failure to Launch' syndrome.", "Severe financial irresponsibility."]
+                    },
+                    chores: {
+                        green: ["Managing leases, taxes, adult healthcare.", "Civic participation.", "Full independent household management."],
+                        red: ["Complete lack of motivation for work or education.", "Inability to manage basic hygiene or living space.", "Evictions or severe debt due to negligence."]
+                    }
                 }
             }
         };
-
-        // Chart Configurations
+        // --- CHART CONFIGURATIONS ---
         const chartConfigs = {
-            growth: {
+            phys: {
                 id: 'growthChart',
                 title: 'Growth Velocity (cm/yr)',
                 subtitle: 'Peak Height Velocity (PHV) typically occurs around 11.5 yrs for females (8.3 cm/yr) and 13.5 yrs for males (9.5 cm/yr).',
                 tag: 'WHO / CDC',
-                tagColor: 'bg-coastal-foam text-coastal-teal',
                 type: 'line',
                 data: {
                     labels: ['9', '10', '11', '12', '13', '14', '15', '16', '17', '18'],
                     datasets: [
-                        { label: 'Male (cm/yr)', data: [5.2, 5.0, 5.3, 6.5, 9.5, 8.0, 5.0, 2.0, 0.5, 0.1], borderColor: '#023E8A', backgroundColor: 'rgba(2, 62, 138, 0.1)', fill: true, tension: 0.4 },
-                        { label: 'Female (cm/yr)', data: [5.5, 6.0, 8.3, 7.0, 4.0, 1.5, 0.5, 0.1, 0, 0], borderColor: '#F43F5E', backgroundColor: 'rgba(244, 63, 94, 0.1)', fill: true, tension: 0.4 }
+                        { label: 'Male (cm/yr)', data: [5.2, 5.0, 5.3, 6.5, 9.5, 8.0, 5.0, 2.0, 0.5, 0.1], borderColor: '#0F172A', backgroundColor: 'rgba(15, 23, 42, 0.1)', fill: true, tension: 0.4 },
+                        { label: 'Female (cm/yr)', data: [5.5, 6.0, 8.3, 7.0, 4.0, 1.5, 0.5, 0.1, 0, 0], borderColor: '#0D9488', backgroundColor: 'rgba(13, 148, 136, 0.1)', fill: true, tension: 0.4 }
                     ]
                 }
             },
-            sleep: {
-                id: 'sleepChart',
-                title: 'The Sleep Deficit',
-                subtitle: 'Biological requirement (8-10 hrs) vs. actual reported sleep. 72.7% of high schoolers report under 8 hrs.',
-                tag: 'NSF / CDC',
-                tagColor: 'bg-rose-50 text-rose-600',
+            mind: {
+                id: 'screenChart',
+                title: 'The Screen Time Tax',
+                subtitle: 'Adolescents push their biological bedtime back by approx 16 minutes for every 30 minutes of high-stimulation screen time before bed.',
+                tag: 'NSF Data',
+                type: 'line',
+                data: {
+                    labels: ['0 mins', '30 mins', '60 mins', '90 mins', '120 mins'],
+                    datasets: [{ label: 'Bedtime Delay (mins)', data: [0, 16, 32, 48, 64], borderColor: '#F43F5E', backgroundColor: 'rgba(244, 63, 94, 0.2)', fill: true, tension: 0.1 }]
+                }
+            },
+            emotion: {
+                id: 'mentalChart',
+                title: 'Persistent Sadness/Hopelessness',
+                subtitle: 'Percentage of US High School students reporting persistent feelings of sadness or hopelessness (2021 vs 2023).',
+                tag: 'CDC YRBS 2023',
                 type: 'bar',
                 data: {
-                    labels: ['Ages 6-12', 'Ages 13-18'],
-                    datasets: [{ label: '% Getting < 8 hrs Sleep', data: [42, 72.7], backgroundColor: '#F43F5E', borderRadius: 6 }]
-                },
-                options: { scales: { y: { max: 100, title: { display: true, text: '% of Students' } } } }
+                    labels: ['All Students', 'Female', 'Male', 'LGBQ+', 'Black', 'Hispanic'],
+                    datasets: [
+                        { label: '2021', data: [42, 57, 29, 69, 40, 46], backgroundColor: '#94A3B8', borderRadius: 4 },
+                        { label: '2023', data: [40, 53, 28, 65, 38, 43], backgroundColor: '#0D9488', borderRadius: 4 }
+                    ]
+                }
             },
-            risk: {
+            friend: {
                 id: 'riskChart',
                 title: 'The Peer Multiplier (Risk)',
-                subtitle: 'In driving simulations, adolescent risk-taking spikes 300% when peers are present. Adult risk remains flat.',
+                subtitle: 'In driving simulations, adolescent risk-taking spikes 300% when peers are present. Adult risk remains flat regardless of observation.',
                 tag: 'Clinical Data',
-                tagColor: 'bg-orange-50 text-orange-600',
                 type: 'bar',
                 data: {
                     labels: ['Alone', 'With Peers'],
                     datasets: [
                         { label: 'Adults', data: [15, 15], backgroundColor: '#94A3B8', borderRadius: 4 },
-                        { label: 'Teens (13-16)', data: [1, 2], backgroundColor: '#F59E0B', borderRadius: 4 }
+                        { label: 'Teens (13-16)', data: [15, 60], backgroundColor: '#F43F5E', borderRadius: 4 }
                     ]
-                },
-                options: { scales: { y: { title: { display: true, text: 'Risky Decisions Made' } } } }
+                }
             },
-            screen: {
-                id: 'screenChart',
-                title: 'The Screen Time Tax',
-                subtitle: 'Adolescents push bedtime back ~16 mins for every 30 mins of high-stimulation screen time before bed.',
-                tag: 'NSF Data',
-                tagColor: 'bg-purple-50 text-purple-600',
+            parent: {
+                id: 'timeChart',
+                title: 'Daily Time Allocation Shift',
+                subtitle: 'As adolescents mature, the hours spent with parents drops sharply while time spent alone or with peers increases.',
+                tag: 'Stats Canada',
                 type: 'line',
                 data: {
-                    labels: ['0 mins', '30 mins', '60 mins', '90 mins', '120 mins'],
-                    datasets: [{ label: 'Bedtime Delay (mins)', data: [0, 16, 32, 48, 64], borderColor: '#8B5CF6', backgroundColor: 'rgba(139, 92, 246, 0.2)', fill: true, tension: 0.1 }]
-                },
-                options: { scales: { y: { title: { display: true, text: 'Minutes Lost' } } } }
+                    labels: ['Age 11', 'Age 13', 'Age 15', 'Age 17', 'Age 19'],
+                    datasets: [
+                        { label: 'Hours w/ Parents', data: [4.5, 3.2, 2.1, 1.5, 1.0], borderColor: '#0F172A', tension: 0.3 },
+                        { label: 'Hours w/ Peers', data: [2.0, 3.5, 4.8, 5.5, 5.0], borderColor: '#0D9488', tension: 0.3 }
+                    ]
+                }
+            },
+            romance: {
+                id: 'marriageChart',
+                title: 'Delayed Adulthood Milestones',
+                subtitle: 'The average age of first marriage has steadily increased globally, extending the "Emerging Adulthood" phase.',
+                tag: 'Census Data',
+                type: 'line',
+                data: {
+                    labels: ['1970', '1980', '1990', '2000', '2010', '2023'],
+                    datasets: [
+                        { label: 'Men (Avg Age)', data: [23.2, 24.7, 26.1, 26.8, 28.2, 30.5], borderColor: '#0F172A', tension: 0.1 },
+                        { label: 'Women (Avg Age)', data: [20.8, 22.0, 23.9, 25.1, 26.1, 28.1], borderColor: '#F43F5E', tension: 0.1 }
+                    ]
+                }
+            },
+            exp: {
+                id: 'sleepChart',
+                title: 'The Sleep Deficit',
+                subtitle: 'Biological requirement (8-10 hrs) vs. actual reported sleep. 72.7% of high schoolers report under 8 hrs.',
+                tag: 'NSF / CDC',
+                type: 'bar',
+                data: {
+                    labels: ['Ages 6-12 (Need 9-12h)', 'Ages 13-18 (Need 8-10h)'],
+                    datasets: [{ label: '% Getting < 8 hrs Sleep', data: [42, 72.7], backgroundColor: '#F43F5E', borderRadius: 6 }]
+                }
+            },
+            chores: {
+                id: 'choreChart',
+                title: 'Time Spent on Productive Activities',
+                subtitle: 'Average daily minutes teens spend on non-school productive tasks.',
+                tag: 'Stats Canada',
+                type: 'bar',
+                data: {
+                    labels: ['Ages 12-14', 'Ages 15-17', 'Ages 18-20'],
+                    datasets: [
+                        { label: 'Boys', data: [45, 35, 55], backgroundColor: '#0F172A', borderRadius: 4 },
+                        { label: 'Girls', data: [65, 40, 40.5], backgroundColor: '#0D9488', borderRadius: 4 }
+                    ]
+                }
             }
         };
-
-        // State variables
+        // --- STATE & UI LOGIC ---
         let curGen = 'female';
-        let curAge = "14";
-        let curCat = 'all';
-        let chartInstances = {};
-
+        let curAge = "13-14";
+        let curCat = 'phys';
+        let activeChartInstance = null;
+        const titles = {
+            'phys': { title: 'Physical Dev.', sub: 'Evaluating biological growth, puberty markers, and physical health.'},
+            'mind': { title: 'Cognitive', sub: 'Brain maturation, executive function, and abstract reasoning.'},
+            'emotion': { title: 'Emotional Reg.', sub: 'Managing stress, emotional volatility, and mental health.'},
+            'parent': { title: 'Parents', sub: 'Navigating autonomy, communication, and family rules.'},
+            'friend': { title: 'Friendships', sub: 'Peer influence, social networks, and group dynamics.'},
+            'romance': { title: 'Romance', sub: 'Dating, physical boundaries, and intimate relationships.'},
+            'exp': { title: 'Boundaries', sub: 'Risk-taking, experimentation, and testing limits.'},
+            'chores': { title: 'Responsibilities', sub: 'Household chores, financial independence, and life skills.'}
+        };
         function toggleMobileMenu(forceClose = false) {
             const sidebar = document.getElementById('sidebar');
             const overlay = document.getElementById('mobile-overlay');
@@ -532,163 +632,101 @@
                 overlay.classList.remove('hidden');
             }
         }
-
         function setGender(g) {
             curGen = g;
-            document.getElementById('f-btn').className = `flex-1 lg:px-8 py-2 rounded-lg font-bold text-sm transition-all ${g === 'female' ? 'bg-white shadow text-coastal-teal' : 'text-slate-500 hover:text-slate-700'}`;
-            document.getElementById('m-btn').className = `flex-1 lg:px-8 py-2 rounded-lg font-bold text-sm transition-all ${g === 'male' ? 'bg-white shadow text-coastal-teal' : 'text-slate-500 hover:text-slate-700'}`;
+            document.getElementById('f-btn').className = `flex-1 lg:px-10 py-2.5 rounded-xl font-bold text-sm transition-all ${g === 'female' ? 'bg-white shadow-sm text-coastal-teal' : 'text-slate-500 hover:text-slate-700 hover:bg-slate-200/50'}`;
+            document.getElementById('m-btn').className = `flex-1 lg:px-10 py-2.5 rounded-xl font-bold text-sm transition-all ${g === 'male' ? 'bg-white shadow-sm text-coastal-teal' : 'text-slate-500 hover:text-slate-700 hover:bg-slate-200/50'}`;
             renderUI();
         }
-
         function setAge(a) {
             curAge = a;
             renderUI();
         }
-
         function setCategory(c) {
             curCat = c;
 
             // Update Sidebar UI
             document.querySelectorAll('.nav-item').forEach(p => {
-                p.classList.remove('active', 'bg-coastal-foam', 'text-coastal-teal', 'border-r-4', 'border-coastal-teal', 'font-black');
-                if(p.id !== 'nav-red') p.classList.add('text-slate-500');
+                p.classList.remove('active');
             });
+            document.getElementById(`nav-${c}`).classList.add('active');
+            // Update Header Text
+            document.getElementById('section-title').innerText = titles[c].title;
+            document.getElementById('section-subtitle').innerText = titles[c].sub;
 
-            const activeNav = document.getElementById(`nav-${c}`);
-            activeNav.classList.add('active', 'bg-coastal-foam', 'text-coastal-teal', 'border-r-4', 'border-coastal-teal', 'font-black');
-            if(c !== 'red') activeNav.classList.remove('text-slate-500');
-
-            // Update Section Title
-            const titles = {
-                'all': 'Overview', 'phys': 'Physical Development', 'mind': 'Cognitive Development',
-                'friend': 'Friendships', 'parent': 'Parental Relationships', 'romance': 'Romantic Interests',
-                'emotion': 'Emotional Regulation', 'exp': 'Boundaries & Experimentation', 'chores': 'Household Chores', 'red': 'Red Flags'
-            };
-            document.getElementById('section-title').innerText = titles[c];
-
+            // Icon match
+            const iconMap = { 'phys':'🏄', 'mind':'🧠', 'emotion':'🌊', 'parent':'🏠', 'friend':'🤙', 'romance':'❤️', 'exp':'🛹', 'chores':'🧹' };
+            document.getElementById('section-icon').innerText = iconMap[c];
             renderUI();
+            if(window.innerWidth < 768) toggleMobileMenu(true);
         }
-
-        function renderCharts() {
-            const chartContainer = document.getElementById('dynamic-charts');
-            chartContainer.innerHTML = '';
-
-            // Destroy old charts to prevent memory leaks/glitches
-            Object.keys(chartInstances).forEach(key => chartInstances[key].destroy());
-            chartInstances = {};
-
-            // Determine which charts to show based on category
-            let chartsToShow = [];
-            if (curCat === 'all') chartsToShow = ['growth', 'sleep', 'risk', 'screen'];
-            if (curCat === 'phys') chartsToShow = ['growth', 'sleep'];
-            if (curCat === 'emotion' || curCat === 'mind') chartsToShow = ['sleep', 'screen'];
-            if (curCat === 'exp' || curCat === 'red') chartsToShow = ['risk', 'screen'];
-
-            if (chartsToShow.length > 0) {
-                chartContainer.classList.remove('hidden');
-                chartsToShow.forEach(chartKey => {
-                    const c = chartConfigs[chartKey];
-                    const canvasId = `canvas-${c.id}`;
-
-                    chartContainer.innerHTML += `
-                        <div class="bg-white p-6 md:p-8 rounded-[2rem] shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
-                            <div class="flex justify-between items-start mb-4">
-                                <h3 class="text-lg font-display font-bold text-slate-800">${c.title}</h3>
-                                <span class="px-3 py-1 text-[9px] font-black uppercase tracking-widest rounded-full ${c.tagColor}">${c.tag}</span>
-                            </div>
-                            <div class="relative w-full h-[200px]">
-                                <canvas id="${canvasId}"></canvas>
-                            </div>
-                            <p class="text-[11px] text-slate-400 mt-4 leading-relaxed font-medium">${c.subtitle}</p>
-                        </div>
-                    `;
-                });
-
-                // Initialize charts after injecting HTML
-                setTimeout(() => {
-                    chartsToShow.forEach(chartKey => {
-                        const c = chartConfigs[chartKey];
-                        const ctx = document.getElementById(`canvas-${c.id}`);
-                        const baseOptions = { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10 } } } } };
-                        chartInstances[chartKey] = new Chart(ctx, {
-                            type: c.type,
-                            data: c.data,
-                            options: {...baseOptions, ...c.options }
-                        });
-                    });
-                }, 50);
-            } else {
-                chartContainer.classList.add('hidden');
-            }
-        }
-
         function renderUI() {
             // 1. Render Age Nav
             const nav = document.getElementById('age-nav');
             nav.innerHTML = '';
-            const ages = ["11", "12", "13", "14", "15", "16", "17", "18", "19-25"];
+            const ages = ["11-12", "13-14", "15-16", "17-18", "19-25"];
 
             ages.forEach(i => {
                 const b = document.createElement('button');
-                b.innerText = i === "19-25" ? "19-25 (Emerging)" : `Age ${i}`;
+                b.innerText = i === "19-25" ? "19-25 (Adult)" : `Ages ${i}`;
                 b.onclick = () => setAge(i);
-                b.className = `age-btn flex-shrink-0 px-5 h-10 rounded-lg font-bold text-sm transition-all whitespace-nowrap ${curAge === i ? 'active' : 'bg-white border border-slate-200 text-slate-500 hover:bg-slate-50'}`;
+                b.className = `age-btn flex-shrink-0 px-6 h-12 rounded-xl font-bold text-sm transition-all whitespace-nowrap ${curAge === i ? 'active' : 'bg-white border border-slate-200 text-slate-500 hover:bg-slate-50'}`;
                 nav.appendChild(b);
             });
+            // 2. Render Green and Red Flags
+            const sectionData = waveData[curGen][curAge][curCat];
+            const greenList = document.getElementById('green-flags-list');
+            const redList = document.getElementById('red-flags-list');
 
-            // 2. Render Cards
-            const grid = document.getElementById('milestone-grid');
-            const d = waveData[curGen][curAge];
-
-            const categories = [
-                { id: 'phys', title: 'Physical', icon: '🏄', color: 'border-coastal-teal text-coastal-teal' },
-                { id: 'mind', title: 'Cognitive', icon: '🧠', color: 'border-coastal-dark text-coastal-dark' },
-                { id: 'friend', title: 'Friends', icon: '🤙', color: 'border-sky-500 text-sky-600' },
-                { id: 'parent', title: 'Parents', icon: '🏠', color: 'border-indigo-400 text-indigo-600' },
-                { id: 'romance', title: 'Romance', icon: '❤️', color: 'border-rose-400 text-rose-600' },
-                { id: 'emotion', title: 'Emotions', icon: '🌊', color: 'border-cyan-400 text-cyan-600' },
-                { id: 'exp', title: 'Boundaries', icon: '🛹', color: 'border-orange-400 text-orange-600' },
-                { id: 'chores', title: 'Chores', icon: '🧹', color: 'border-emerald-400 text-emerald-600' }
-            ];
-
-            // Build panels: each category card + its specific red flag card
-            const allPanels = [];
-            categories.forEach(cat => {
-                allPanels.push({ id: cat.id, title: cat.title, data: d[cat.id] || [], icon: cat.icon, color: cat.color });
-                const redData = d[`red_${cat.id}`] || [];
-                if (redData.length > 0) {
-                    allPanels.push({ id: 'red', parentCat: cat.id, title: `${cat.title} Red Flags`, data: redData, icon: '🚩', color: 'bg-rose-50 border-rose-500 text-rose-600' });
-                }
-            });
-
-            let filtered;
-            if (curCat === 'all') {
-                filtered = allPanels;
-            } else if (curCat === 'red') {
-                // Show all red flag cards when "Red Flags" nav is selected
-                filtered = allPanels.filter(x => x.id === 'red');
-            } else {
-                // Show the category card + its specific red flag card
-                filtered = allPanels.filter(x => x.id === curCat || (x.id === 'red' && x.parentCat === curCat));
-            }
-            const finalPanels = filtered.filter(p => p.data && p.data.length > 0);
-
-            grid.innerHTML = finalPanels.map(x => `
-                <div class="p-6 md:p-8 rounded-3xl border-t-[6px] shadow-sm hover:shadow-md transition-all ${x.id === 'red' ? 'bg-rose-50 border-rose-500' : 'bg-white ' + x.color}">
-                    <div class="flex items-center gap-3 mb-6">
-                        <span class="text-3xl">${x.icon}</span>
-                        <h4 class="font-black text-slate-900 uppercase text-xs tracking-widest">${x.title}</h4>
-                    </div>
-                    <ul class="space-y-4">
-                        ${x.data.map(item => `<li class="flex items-start gap-3 text-sm text-slate-600 font-medium leading-relaxed"><span class="${x.id === 'red' ? 'text-rose-500' : 'text-coastal-teal'} mt-0.5 text-lg leading-none">•</span><span>${item}</span></li>`).join('')}
-                    </ul>
-                </div>`).join('');
-
-            // 3. Render Charts
-            renderCharts();
+            greenList.innerHTML = (sectionData.green || []).map(item => `
+                <li class="flex items-start gap-4">
+                    <span class="text-emerald-500 mt-1">✔</span>
+                    <span class="text-slate-600 font-medium leading-relaxed">${item}</span>
+                </li>
+            `).join('');
+            redList.innerHTML = (sectionData.red || []).map(item => `
+                <li class="flex items-start gap-4">
+                    <span class="text-rose-500 mt-1">✘</span>
+                    <span class="text-slate-600 font-medium leading-relaxed">${item}</span>
+                </li>
+            `).join('');
+            // 3. Render Appropriate Chart
+            renderChart();
         }
+        function renderChart() {
+            const container = document.getElementById('dynamic-chart-container');
+            const cData = chartConfigs[curCat];
+            if(cData) {
+                container.classList.remove('hidden');
+                document.getElementById('chart-title').innerText = cData.title;
+                document.getElementById('chart-subtitle').innerText = cData.subtitle;
+                document.getElementById('chart-source').innerText = cData.tag;
 
-        window.onload = () => { renderUI(); };
+                if(activeChartInstance) {
+                    activeChartInstance.destroy();
+                }
+                const ctx = document.getElementById('active-chart').getContext('2d');
+                activeChartInstance = new Chart(ctx, {
+                    type: cData.type,
+                    data: cData.data,
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, font: {family: 'Outfit', weight: 600} } } },
+                        scales: {
+                            y: { beginAtZero: true, grid: { borderDash: [4, 4] } },
+                            x: { grid: { display: false } }
+                        }
+                    }
+                });
+            } else {
+                container.classList.add('hidden');
+            }
+        }
+        // Initialize
+        window.onload = () => {
+            setCategory('phys'); // triggers renderUI and renderChart
+        };
     </script>
 </body>
 </html>
